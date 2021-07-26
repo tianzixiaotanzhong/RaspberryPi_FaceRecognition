@@ -1,0 +1,2 @@
+F:\mingw64\bin\ar.exe qc liblib_demo.a CMakeFiles/lib_demo.dir/source/my_csv.cpp.obj
+F:\mingw64\bin\ranlib.exe liblib_demo.a
