@@ -8,20 +8,21 @@
 #include <sstream>
 #include <fstream>
 #include <unordered_map>
-#include <filesystem>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <thread>
 #include "my_csv.h"
 using namespace std;
 using namespace cv;
 using namespace cv::face;
 
-#define DEBUG_MODE
+//#define DEBUG_MODE
 
 vector<Mat> detectAndDraw( Mat& img, CascadeClassifier& cascade,
                     CascadeClassifier& nestedCascade,
                     double scale, bool tryflip );
-string cascadeName = "F:/OpenCV/opencv/sources/data/haarcascades/haarcascade_frontalface_alt.xml";
-string nestedCascadeName = "F:/OpenCV/opencv/sources/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
+string cascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_frontalface_alt.xml";
+string nestedCascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
 int main( int argc, const char** argv )
 {
     VideoCapture capture;
@@ -37,7 +38,7 @@ int main( int argc, const char** argv )
         cerr << "ERROR: Could not load classifier cascade" << endl;
         return -1;
     }
-    int camera = 0;
+    int camera = -1;
     if(!capture.open(camera))
     {
         cout << "Capture from camera #" <<  camera << " didn't work" << endl;
@@ -71,15 +72,20 @@ int main( int argc, const char** argv )
             if ( c == 27 || c == 'q' || c == 'Q' )
                 break;
             if ( c >= '0' && c <= '9' && !faceImgs.empty()) {
+                cout<<"snapshot"<<endl;
                 int label = c - '0';
-                string imgname = format("../data\\face%d/s%d.jpg", label, ++ump[label]);
-                std::filesystem::create_directory(format("../data/face%d", label));
-                imwrite(imgname, faceImgs[0]);
+                string imgname = format("../data/face%d/s%d.jpg", label, ++ump[label]);
+                mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
+                cout << imwrite(imgname, faceImgs[0]);
                 write_csv("../script/test.csv", imgname, label);
             }
             if ((c == 'r' || c == 'R') && !faceImgs.empty()) {
                 Mat testSample = faceImgs[0];
                 read_csv("../script/test.csv", srcImgs, labels);
+                if (srcImgs.empty()) {
+                    cout << "Imgs is empty!" << endl;
+                    continue;
+                }
                 Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
                 model->train(srcImgs, labels);
                 int predictedLabel = model->predict(faceImgs[0]);

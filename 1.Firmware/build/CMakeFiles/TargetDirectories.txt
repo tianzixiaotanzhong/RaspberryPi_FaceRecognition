@@ -1,3 +1,3 @@
-C:/Users/WangZX/Desktop/test/FaceRecognition/build/CMakeFiles/Demo.dir
-C:/Users/WangZX/Desktop/test/FaceRecognition/build/CMakeFiles/edit_cache.dir
-C:/Users/WangZX/Desktop/test/FaceRecognition/build/CMakeFiles/rebuild_cache.dir
+/home/pi/opencv-project/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/rebuild_cache.dir
+/home/pi/opencv-project/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir
+/home/pi/opencv-project/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/edit_cache.dir
