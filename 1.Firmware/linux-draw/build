@@ -1,0 +1,4 @@
+#!/bin/bash
+rm -rf *.o
+g++ -w -I./includes test.cpp DrawImage.cpp readjpg.cpp -L./libs/linux -ljpeg  -lavformat -lavcodec -lavutil -lswscale -lavdevice -lswresample  -lm -lz -lbz2 -lpthread
+#-lavcodec -lavformat -lswscale -lavdevice -lpthread -lavcodec -lavdevice -lswscale 

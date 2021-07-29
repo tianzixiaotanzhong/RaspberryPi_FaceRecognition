@@ -1,4 +1,4 @@
-# Install script for directory: /home/pi/opencv-project/test/RaspberryPi_FaceRecognition/1.Firmware
+# Install script for directory: /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/pi/opencv-project/test/RaspberryPi_FaceRecognition/1.Firmware/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
