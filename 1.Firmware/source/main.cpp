@@ -11,12 +11,30 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <thread>
+#include "DrawImage.h"
+#include "readjpg.h"
+#include "GenVedio.h"
 #include "my_csv.h"
 using namespace std;
 using namespace cv;
 using namespace cv::face;
 
 //#define DEBUG_MODE
+
+int ImgW = 640;
+int ImgH = 480;
+int nB = 3;
+int ImgPitch = ROUND4(ImgW*3);
+int len = ImgPitch*ImgH;
+
+void draw_Screen (Mat input) {
+    CDrawImg_Linux drawer;
+    imwrite("../data/tmp.jpg", input);
+    unsigned char* rb = ReadJPEG("../data/tmp.jpg", ImgW, ImgH, nB);
+    drawer.ShowImage("", rb, ImgW, ImgH, nB);
+    delete [] rb;
+    rb = null;
+}
 
 vector<Mat> detectAndDraw( Mat& img, CascadeClassifier& cascade,
                     CascadeClassifier& nestedCascade,
@@ -179,6 +197,7 @@ vector<Mat> detectAndDraw( Mat& img, CascadeClassifier& cascade,
     for (vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r) {
         faceImgs.push_back(smallImg(*r));
     }
-    imshow( "result", img );
+    // imshow( "result", img );
+    draw_Screen(img);
     return faceImgs;
 }

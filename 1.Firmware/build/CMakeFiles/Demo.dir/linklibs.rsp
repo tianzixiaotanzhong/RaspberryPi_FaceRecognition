@@ -1,0 +1,1 @@
+  -L/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/linux-draw/libs/linux  -ljpeg -lavformat -lavcodec -lavutil -lswscale -lavdevice -lswresample -lm -lz -lbz2 -lpthread -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

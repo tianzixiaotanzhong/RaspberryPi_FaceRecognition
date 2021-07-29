@@ -1,0 +1,12 @@
+[
+{
+  "directory": "C:/Users/WangZX/Desktop/test/FaceRecognition/1.Firmware/build",
+  "command": "F:\\mingw64\\bin\\x86_64-w64-mingw32-g++.exe  @CMakeFiles/Demo.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Demo.dir\\source\\main.cpp.obj -c C:\\Users\\WangZX\\Desktop\\test\\FaceRecognition\\1.Firmware\\source\\main.cpp",
+  "file": "C:/Users/WangZX/Desktop/test/FaceRecognition/1.Firmware/source/main.cpp"
+},
+{
+  "directory": "C:/Users/WangZX/Desktop/test/FaceRecognition/1.Firmware/build",
+  "command": "F:\\mingw64\\bin\\x86_64-w64-mingw32-g++.exe  @CMakeFiles/Demo.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Demo.dir\\source\\my_csv.cpp.obj -c C:\\Users\\WangZX\\Desktop\\test\\FaceRecognition\\1.Firmware\\source\\my_csv.cpp",
+  "file": "C:/Users/WangZX/Desktop/test/FaceRecognition/1.Firmware/source/my_csv.cpp"
+}
+]
