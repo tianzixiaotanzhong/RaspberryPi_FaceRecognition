@@ -132,6 +132,7 @@ void *detectFace_entry (void *arg) {
                 faces.push_back(Rect(dtf.smallImg.cols - r->x - r->width, r->y, r->width, r->height));
             }
         }
+        pthread_cond_signal (my_convar);
         pthread_mutex_unlock (&my_mutex);
         t = (double)getTickCount() - t;
 
@@ -146,6 +147,7 @@ void *drawFace_entry (void *arg) {
     while (1) {
         cout << "draw face thread!" << endl;
         pthread_mutex_lock (&my_mutex);
+        pthread_cond_wait (my_convar);
         for ( size_t i = 0; i < dtf.faces.size(); i++ )
         {
             Rect r = dtf.faces[i];
