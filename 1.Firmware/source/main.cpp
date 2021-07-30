@@ -189,25 +189,25 @@ void *collectFace_entry (void *arg) {
 
 void *recognition_entry (void *arg) {
     while (1) {
-        pthread_mutex_lock (&my_mutex);
-        cout << "recognition face thread!" << endl;
-        if (dtf.faces.empty()) {
-            pthread_exit((void*) 0);
-        }
-        Mat testSample = dtf.smallImg(dtf.faces[0]);
-        vector<Mat> imgs;
-        vector<int> labels;
-        read_csv("../script/test.csv", imgs, labels);
-        if (imgs.empty()) {
-            cout << "Imgs is empty!" << endl;
-            pthread_exit((void*) 0);
-        }
-        Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
-        model->train(imgs, labels);
-        int predictedLabel = model->predict(dtf.img(dtf.faces[0]));
-        string result_message = format("Predicted class = %d.", predictedLabel);
-        pthread_mutex_unlock (&my_mutex);
-        cout << result_message << endl;
+        // pthread_mutex_lock (&my_mutex);
+        // cout << "recognition face thread!" << endl;
+        // if (dtf.faces.empty()) {
+        //     pthread_exit((void*) 0);
+        // }
+        // Mat testSample = dtf.smallImg(dtf.faces[0]);
+        // vector<Mat> imgs;
+        // vector<int> labels;
+        // read_csv("../script/test.csv", imgs, labels);
+        // if (imgs.empty()) {
+        //     cout << "Imgs is empty!" << endl;
+        //     pthread_exit((void*) 0);
+        // }
+        // Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
+        // model->train(imgs, labels);
+        // int predictedLabel = model->predict(dtf.img(dtf.faces[0]));
+        // string result_message = format("Predicted class = %d.", predictedLabel);
+        // pthread_mutex_unlock (&my_mutex);
+        // cout << result_message << endl;
     }
 }
 
