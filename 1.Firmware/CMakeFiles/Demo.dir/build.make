@@ -46,7 +46,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build
+CMAKE_BINARY_DIR = /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Demo.dir/depend.make
@@ -58,8 +58,8 @@ include CMakeFiles/Demo.dir/progress.make
 include CMakeFiles/Demo.dir/flags.make
 
 CMakeFiles/Demo.dir/source/main.cpp.o: CMakeFiles/Demo.dir/flags.make
-CMakeFiles/Demo.dir/source/main.cpp.o: ../source/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Demo.dir/source/main.cpp.o"
+CMakeFiles/Demo.dir/source/main.cpp.o: source/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Demo.dir/source/main.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Demo.dir/source/main.cpp.o -c /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/source/main.cpp
 
 CMakeFiles/Demo.dir/source/main.cpp.i: cmake_force
@@ -71,8 +71,8 @@ CMakeFiles/Demo.dir/source/main.cpp.s: cmake_force
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/source/main.cpp -o CMakeFiles/Demo.dir/source/main.cpp.s
 
 CMakeFiles/Demo.dir/source/my_csv.cpp.o: CMakeFiles/Demo.dir/flags.make
-CMakeFiles/Demo.dir/source/my_csv.cpp.o: ../source/my_csv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Demo.dir/source/my_csv.cpp.o"
+CMakeFiles/Demo.dir/source/my_csv.cpp.o: source/my_csv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Demo.dir/source/my_csv.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Demo.dir/source/my_csv.cpp.o -c /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/source/my_csv.cpp
 
 CMakeFiles/Demo.dir/source/my_csv.cpp.i: cmake_force
@@ -84,8 +84,8 @@ CMakeFiles/Demo.dir/source/my_csv.cpp.s: cmake_force
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/source/my_csv.cpp -o CMakeFiles/Demo.dir/source/my_csv.cpp.s
 
 CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.o: CMakeFiles/Demo.dir/flags.make
-CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.o: ../linux-draw/DrawImage.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.o"
+CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.o: linux-draw/DrawImage.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.o -c /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/linux-draw/DrawImage.cpp
 
 CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.i: cmake_force
@@ -97,8 +97,8 @@ CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.s: cmake_force
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/linux-draw/DrawImage.cpp -o CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.s
 
 CMakeFiles/Demo.dir/linux-draw/readjpg.cpp.o: CMakeFiles/Demo.dir/flags.make
-CMakeFiles/Demo.dir/linux-draw/readjpg.cpp.o: ../linux-draw/readjpg.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Demo.dir/linux-draw/readjpg.cpp.o"
+CMakeFiles/Demo.dir/linux-draw/readjpg.cpp.o: linux-draw/readjpg.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Demo.dir/linux-draw/readjpg.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Demo.dir/linux-draw/readjpg.cpp.o -c /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/linux-draw/readjpg.cpp
 
 CMakeFiles/Demo.dir/linux-draw/readjpg.cpp.i: cmake_force
@@ -177,7 +177,7 @@ Demo: /home/pi/opencv-project/opencv/_build/lib/libopencv_photo.so.4.5.3
 Demo: /home/pi/opencv-project/opencv/_build/lib/libopencv_imgproc.so.4.5.3
 Demo: /home/pi/opencv-project/opencv/_build/lib/libopencv_core.so.4.5.3
 Demo: CMakeFiles/Demo.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable Demo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable Demo"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Demo.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -190,6 +190,6 @@ CMakeFiles/Demo.dir/clean:
 .PHONY : CMakeFiles/Demo.dir/clean
 
 CMakeFiles/Demo.dir/depend:
-	cd /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles/Demo.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Demo.dir/depend
 

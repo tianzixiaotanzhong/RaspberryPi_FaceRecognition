@@ -51,7 +51,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build
+CMAKE_BINARY_DIR = /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

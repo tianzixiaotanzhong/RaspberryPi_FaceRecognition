@@ -15,6 +15,7 @@
 #include "readjpg.h"
 #include "GenVedio.h"
 #include "my_csv.h"
+//#include <unistd.h>
 using namespace std;
 using namespace cv;
 using namespace cv::face;
@@ -27,20 +28,24 @@ int nB = 3;
 int ImgPitch = ROUND4(ImgW*3);
 int len = ImgPitch*ImgH;
 
+CDrawImg_Linux drawer;
+
 void draw_Screen (Mat input) {
-    CDrawImg_Linux drawer;
-    imwrite("../data/tmp.jpg", input);
-    unsigned char* rb = ReadJPEG("../data/tmp.jpg", ImgW, ImgH, nB);
-    drawer.ShowImage("", rb, ImgW, ImgH, nB);
-    delete [] rb;
-    rb = null;
+    //CDrawImg_Linux drawer;
+    //imwrite("../data/tmp.jpg", input);
+    //unsigned char* rb = ReadJPEG("../data/tmp.jpg", ImgW, ImgH, nB);
+    cv::cvtColor(input, input, cv::COLOR_RGB2BGR);
+    drawer.ShowImage("", input.data, ImgW, ImgH, nB);
+    //usleep(10000);
+    //delete [] rb;
+    //rb = null;
 }
 
 vector<Mat> detectAndDraw( Mat& img, CascadeClassifier& cascade,
                     CascadeClassifier& nestedCascade,
                     double scale, bool tryflip );
-string cascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_frontalface_alt.xml";
-string nestedCascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
+string cascadeName = "/home/pi/opencv-project/opencv/data/haarcascades/haarcascade_frontalface_alt.xml";
+string nestedCascadeName = "/home/pi/opencv-project/opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
 int main( int argc, const char** argv )
 {
     VideoCapture capture;
@@ -86,7 +91,7 @@ int main( int argc, const char** argv )
             #endif
 
             vector<Mat> faceImgs = detectAndDraw( frame1, cascade, nestedCascade, scale, tryflip );
-            char c = (char)waitKey(10);
+            char c = 0;//(char)waitKey(10);
             if ( c == 27 || c == 'q' || c == 'Q' )
                 break;
             if ( c >= '0' && c <= '9' && !faceImgs.empty()) {
@@ -197,7 +202,7 @@ vector<Mat> detectAndDraw( Mat& img, CascadeClassifier& cascade,
     for (vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r) {
         faceImgs.push_back(smallImg(*r));
     }
-    // imshow( "result", img );
+    imshow( "result", img );
     draw_Screen(img);
     return faceImgs;
 }

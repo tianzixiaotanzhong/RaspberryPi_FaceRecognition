@@ -4,18 +4,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/linux-draw/DrawImage.cpp" "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.o"
-  "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/linux-draw/readjpg.cpp" "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/linux-draw/readjpg.cpp.o"
-  "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/source/main.cpp" "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/source/main.cpp.o"
-  "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/source/my_csv.cpp" "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/source/my_csv.cpp.o"
+  "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/linux-draw/DrawImage.cpp" "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles/Demo.dir/linux-draw/DrawImage.cpp.o"
+  "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/linux-draw/readjpg.cpp" "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles/Demo.dir/linux-draw/readjpg.cpp.o"
+  "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/source/main.cpp" "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles/Demo.dir/source/main.cpp.o"
+  "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/source/my_csv.cpp" "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles/Demo.dir/source/my_csv.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  ".././include"
-  ".././linux-draw/includes"
-  ".././linux-draw"
+  "./include"
+  "./linux-draw/includes"
+  "./linux-draw"
   "/home/pi/opencv-project/opencv/_build"
   "/home/pi/opencv-project/opencv/include"
   "/home/pi/opencv-project/opencv/modules/core/include"

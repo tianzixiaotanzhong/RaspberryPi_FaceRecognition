@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
