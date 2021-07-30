@@ -185,6 +185,7 @@ void *collectFace_entry (void *arg) {
 
 void *recognition_entry (void *arg) {
     while (1) {
+        cout << "recognition face thread!" << endl;
         if (dtf.faces.empty()) {
             pthread_exit((void*) 0);
         }
