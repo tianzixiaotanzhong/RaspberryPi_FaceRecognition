@@ -78,6 +78,13 @@ int dtf_init (void) {
         return -1;
     }
 
+    vector<Mat> imgs;
+    vector<int> labels;
+    read_csv("../script/test.csv", imgs, labels);
+    if (imgs.empty()) {
+        cout << "Imgs is empty!" << endl;
+        pthread_exit((void*) 0);
+    }
     for (auto x: labels) {
         dtf.ump[x]++;
     }
