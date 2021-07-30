@@ -213,6 +213,7 @@ int main( int argc, const char** argv )
             if( frame.empty() )
                 break;
             Mat frame1 = frame.clone();
+            dtf.img = frame1;
 
             #ifdef DEBUG_MODE 
             cout << "-----" << frame1.size() << endl;
