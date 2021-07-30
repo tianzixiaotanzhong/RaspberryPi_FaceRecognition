@@ -90,12 +90,12 @@ void *detectFace_entry (void *arg) {
     
     rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
     Mat gray;
-    cvtColor( dft.img, gray, COLOR_BGR2GRAY );
+    cvtColor( dtf.img, gray, COLOR_BGR2GRAY );
     double fx = 1 / dtf.scale;
     resize( gray, dtf.smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
     equalizeHist( dtf.smallImg, dtf.smallImg );
     t = (double)getTickCount();
-    cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), dtf.faces,
+    dtf.cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), dtf.faces,
         1.1, 2, 0
         //|CASCADE_FIND_BIGGEST_OBJECT
         //|CASCADE_DO_ROUGH_SEARCH
@@ -109,13 +109,13 @@ void *detectFace_entry (void *arg) {
     if( dtf.tryflip )
     {
         flip(dtf.smallImg, dtf.smallImg, 1);
-        cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), faces,
+        dtf.cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), faces,
                                  1.1, 2, 0
                                  //|CASCADE_FIND_BIGGEST_OBJECT
                                  //|CASCADE_DO_ROUGH_SEARCH
                                  |CASCADE_SCALE_IMAGE,
                                  Size(120, 120) );
-        for( vector<Rect>::const_iterator r = faces2.begin(); r != faces2.end(); ++r)
+        for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r)
         {
             faces.push_back(Rect(dtf.detectArea.cols - r->x - r->width, r->y, r->width, r->height));
         }
