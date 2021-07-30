@@ -117,7 +117,7 @@ void *detectFace_entry (void *arg) {
                                  Size(120, 120) );
         for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r)
         {
-            faces.push_back(Rect(dtf.detectArea.cols - r->x - r->width, r->y, r->width, r->height));
+            faces.push_back(Rect(dtf.smallImg.cols - r->x - r->width, r->y, r->width, r->height));
         }
     }
     t = (double)getTickCount() - t;
@@ -154,9 +154,9 @@ void *drawFace_entry (void *arg) {
 void *collectFace_entry (void *arg) {
     cout<<"snapshot"<<endl;
     int label = 0;
-    string imgname = format("../data/face%d/s%d.jpg", label, ++ump[label]);
+    string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
     mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-    cout << imwrite(imgname, dtf.smallImg(faces[0]));
+    cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
     write_csv("../script/test.csv", imgname, label);
 }
 
