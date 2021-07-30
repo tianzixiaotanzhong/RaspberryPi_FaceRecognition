@@ -211,8 +211,8 @@ int main( int argc, const char** argv )
             dt_tid = pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
             df_tid = pthread_create(&df_thd, NULL, drawFace_entry, (void*) 0);
             void *status;
-            pthread_join(dt_thd, status);
-            pthread_join(df_thd, status);
+            pthread_join(dt_thd, &status);
+            pthread_join(df_thd, &status);
             char c = 0;//(char)waitKey(10);
             if ( c == 27 || c == 'q' || c == 'Q' )
                 break;
@@ -220,17 +220,7 @@ int main( int argc, const char** argv )
                 
             }
             if ((c == 'r' || c == 'R') && !faceImgs.empty()) {
-                Mat testSample = faceImgs[0];
-                read_csv("../script/test.csv", srcImgs, labels);
-                if (srcImgs.empty()) {
-                    cout << "Imgs is empty!" << endl;
-                    continue;
-                }
-                Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
-                model->train(srcImgs, labels);
-                int predictedLabel = model->predict(faceImgs[0]);
-                string result_message = format("Predicted class = %d.", predictedLabel);
-                cout << result_message << endl;
+
             }
         }
     }
