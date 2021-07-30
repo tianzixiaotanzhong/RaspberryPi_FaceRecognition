@@ -109,7 +109,7 @@ void *detectFace_entry (void *arg) {
         //|CASCADE_DO_ROUGH_SEARCH
         |CASCADE_SCALE_IMAGE,
         Size(120, 120) );
-    for (auto &r: faces) {
+    for (auto &r: dtf.faces) {
         r.x += dtf.detectArea.x;
         r.y += dtf.detectArea.y;
     }
