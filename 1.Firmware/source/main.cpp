@@ -136,7 +136,7 @@ void *detectFace_entry (void *arg) {
 }
 
 void *drawFace_entry (void *arg) {
-    cout << "detect face thread!" << endl;
+    cout << "draw face thread!" << endl;
     for ( size_t i = 0; i < dtf.faces.size(); i++ )
     {
         Rect r = dtf.faces[i];
@@ -158,6 +158,7 @@ void *drawFace_entry (void *arg) {
                        Point(cvRound((r.x + r.width-1)*dtf.scale), cvRound((r.y + r.height-1)*dtf.scale)),
                        color, 3, 8, 0);
     }
+    draw_Screen(dtf.img);
 }
 
 void *collectFace_entry (void *arg) {
