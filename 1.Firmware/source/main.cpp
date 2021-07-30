@@ -208,6 +208,8 @@ int main( int argc, const char** argv )
     if( capture.isOpened() )
     {
         cout << "Video capturing has been started ..." << endl;
+        pthread_t dt_thd, df_thd, cf_thd, rg_thd;
+        int dt_tid, df_tid, cf_tid, rg_tid;
         for(;;)
         {
             capture >> frame;
@@ -219,11 +221,11 @@ int main( int argc, const char** argv )
             #ifdef DEBUG_MODE 
             cout << "-----" << frame1.size() << endl;
             #endif
-            pthread_t dt_thd, df_thd, cf_thd, rg_thd;
-            int dt_tid = pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
-            int df_tid = pthread_create(&df_thd, NULL, drawFace_entry, (void*) 0);
-            int cf_tid = pthread_create(&cf_thd, NULL, collectFace_entry, (void*) 0);
-            int rg_tid = pthread_create(&rg_thd, NULL, recognition_entry, (void*) 0);
+            
+            pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
+            pthread_create(&df_thd, NULL, drawFace_entry, (void*) 0);
+            pthread_create(&cf_thd, NULL, collectFace_entry, (void*) 0);
+            pthread_create(&rg_thd, NULL, recognition_entry, (void*) 0);
             
         }
         void *status;
