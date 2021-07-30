@@ -219,7 +219,7 @@ int main( int argc, const char** argv )
     }
     
     dtf_init();
-    
+    pthread_mutex_init(&my_mutex, NULL);
 
     if( capture.isOpened() )
     {
