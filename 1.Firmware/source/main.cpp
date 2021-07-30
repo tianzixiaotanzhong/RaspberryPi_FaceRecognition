@@ -162,8 +162,9 @@ void *drawFace_entry (void *arg) {
 }
 
 void *collectFace_entry (void *arg) {
-    cout<<"snapshot"<<endl;
-    int label = 0;
+    cout<<"snapshot"<<endl <<"Please enter your number:";
+    int label;
+    cin >> label;
     string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
     mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
     cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
@@ -221,19 +222,15 @@ int main( int argc, const char** argv )
             pthread_t dt_thd, df_thd, cf_thd, rg_thd;
             int dt_tid = pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
             int df_tid = pthread_create(&df_thd, NULL, drawFace_entry, (void*) 0);
-            void *status;
-            pthread_join(dt_thd, &status);
-            pthread_join(df_thd, &status);
-            char c = 0;//(char)waitKey(10);
-            if ( c == 27 || c == 'q' || c == 'Q' )
-                break;
-            if ( c >= '0' && c <= '9' && !dtf.faces.empty()) {
-                
-            }
-            if ((c == 'r' || c == 'R') && !dtf.faces.empty()) {
-
-            }
+            int cf_tid = pthread_create(&cf_thd, NULL, collectFace_entry, (void*) 0);
+            int rg_tid = pthread_create(&rg_thd, NULL, recognition_entry, (void*) 0);
+            
         }
+        void *status;
+        pthread_join(dt_thd, &status);
+        pthread_join(df_thd, &status);
+        pthread_join(cf_thd, &status);
+        pthread_join(rg_thd, &status);
     }
     
     return 0;
