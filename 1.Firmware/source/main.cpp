@@ -225,7 +225,7 @@ int main( int argc, const char** argv )
     
     dtf_init();
     pthread_mutex_init(&my_mutex, NULL);
-    pthread_cond_init(&my_convar,NULL)
+    pthread_cond_init(&my_convar,NULL);
 
     if( capture.isOpened() )
     {
