@@ -92,6 +92,7 @@ int dtf_init (void) {
 
 
 void *detectFace_entry (void *arg) {
+    cout << "detect face thread!" << endl;
     double t = 0;
     vector<Rect> faces;
     
@@ -135,6 +136,7 @@ void *detectFace_entry (void *arg) {
 }
 
 void *drawFace_entry (void *arg) {
+    cout << "detect face thread!" << endl;
     for ( size_t i = 0; i < dtf.faces.size(); i++ )
     {
         Rect r = dtf.faces[i];
