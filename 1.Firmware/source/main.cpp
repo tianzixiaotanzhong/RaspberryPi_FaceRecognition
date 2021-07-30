@@ -58,13 +58,14 @@ typedef struct {
     Rect detectArea;
     vector<Rect> faces;
     CascadeClassifier cascade;
-    CascadeClassifier nestedCascade
+    CascadeClassifier nestedCascade;
+    unordered_map<int, int> ump;
 }dtf_structure;
 
 dtf_structure dtf;
-unordered_map<int, int> ump;
 
-void dtf_init (void) {
+
+int dtf_init (void) {
     dtf.detectArea = Rect(200, 120, 240, 240);
     dtf.tryflip = false;
     dtf.scale = 1;
@@ -75,6 +76,10 @@ void dtf_init (void) {
     {
         cerr << "ERROR: Could not load classifier cascade" << endl;
         return -1;
+    }
+
+    for (auto x: labels) {
+        dtf.ump[x]++;
     }
 }
 
@@ -103,7 +108,7 @@ void *detectFace_entry (void *arg) {
     
     if( dtf.tryflip )
     {
-        flip(dtf.smallImg, dtfsmallImg, 1);
+        flip(dtf.smallImg, dtf.smallImg, 1);
         cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), faces,
                                  1.1, 2, 0
                                  //|CASCADE_FIND_BIGGEST_OBJECT
@@ -165,11 +170,11 @@ void *recognition_entry (void *arg) {
     read_csv("../script/test.csv", imgs, labels);
     if (imgs.empty()) {
         cout << "Imgs is empty!" << endl;
-        continue;
+        pthread_exit((void*) 0);
     }
     Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
     model->train(imgs, labels);
-    int predictedLabel = model->predict(dtf.img(dtf.faces));
+    int predictedLabel = model->predict(dtf.img(dtf.faces[0]));
     string result_message = format("Predicted class = %d.", predictedLabel);
     cout << result_message << endl;
 }
@@ -187,9 +192,7 @@ int main( int argc, const char** argv )
     }
     
     dtf_init();
-    for (auto x: labels) {
-        ump[x]++;
-    }
+    
 
     if( capture.isOpened() )
     {
@@ -205,18 +208,18 @@ int main( int argc, const char** argv )
             cout << "-----" << frame1.size() << endl;
             #endif
             pthread_t dt_thd, df_thd, cf_thd, rg_thd;
-            dt_tid = pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
-            df_tid = pthread_create(&df_thd, NULL, drawFace_entry, (void*) 0);
+            int dt_tid = pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
+            int df_tid = pthread_create(&df_thd, NULL, drawFace_entry, (void*) 0);
             void *status;
             pthread_join(dt_thd, &status);
             pthread_join(df_thd, &status);
             char c = 0;//(char)waitKey(10);
             if ( c == 27 || c == 'q' || c == 'Q' )
                 break;
-            if ( c >= '0' && c <= '9' && !faceImgs.empty()) {
+            if ( c >= '0' && c <= '9' && !dtf.faces.empty()) {
                 
             }
-            if ((c == 'r' || c == 'R') && !faceImgs.empty()) {
+            if ((c == 'r' || c == 'R') && !dtf.faces.empty()) {
 
             }
         }
