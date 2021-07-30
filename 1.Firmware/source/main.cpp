@@ -176,6 +176,7 @@ void *collectFace_entry (void *arg) {
         cout<<"snapshot"<<endl <<"Please enter your number:";
         int label;
         cin >> label;
+        cout << "enter" << endl;
         string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
         mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
         cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
