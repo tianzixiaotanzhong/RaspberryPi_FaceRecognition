@@ -64,6 +64,7 @@ typedef struct {
 
 dtf_structure dtf;
 pthread_mutex_t my_mutex;
+pthread_cond_t my_convar;
 
 int dtf_init (void) {
     dtf.detectArea = Rect(200, 120, 240, 240);
@@ -174,6 +175,7 @@ void *drawFace_entry (void *arg) {
 void *collectFace_entry (void *arg) {
     while (1) {
         cout<<"snapshot"<<endl <<"Please enter your number:";
+        pthread_mutex_lock (&my_mutex);
         int label;
         cin >> label;
         cout << "enter" << endl;
@@ -181,11 +183,13 @@ void *collectFace_entry (void *arg) {
         mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
         cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
         write_csv("../script/test.csv", imgname, label);
+        pthread_mutex_unlock (&my_mutex);
     }
 }
 
 void *recognition_entry (void *arg) {
     while (1) {
+        pthread_mutex_lock (&my_mutex);
         cout << "recognition face thread!" << endl;
         if (dtf.faces.empty()) {
             pthread_exit((void*) 0);
@@ -202,6 +206,7 @@ void *recognition_entry (void *arg) {
         model->train(imgs, labels);
         int predictedLabel = model->predict(dtf.img(dtf.faces[0]));
         string result_message = format("Predicted class = %d.", predictedLabel);
+        pthread_mutex_unlock (&my_mutex);
         cout << result_message << endl;
     }
 }
@@ -220,6 +225,7 @@ int main( int argc, const char** argv )
     
     dtf_init();
     pthread_mutex_init(&my_mutex, NULL);
+    pthread_cond_init(my_convar,NULL)
 
     if( capture.isOpened() )
     {
