@@ -219,8 +219,6 @@ int main( int argc, const char** argv )
     {
         cout << "Video capturing has been started ..." << endl;
         capture >> frame;
-        if( frame.empty() )
-            break;
         dtf.img = frame.clone();
         pthread_t dt_thd, df_thd, cf_thd, rg_thd;
         int dt_tid, df_tid, cf_tid, rg_tid;
