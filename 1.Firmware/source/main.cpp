@@ -63,7 +63,7 @@ typedef struct {
 }dtf_structure;
 
 dtf_structure dtf;
-
+pthread_mutex_t my_mutex;
 
 int dtf_init (void) {
     dtf.detectArea = Rect(200, 120, 240, 240);
@@ -98,6 +98,7 @@ void *detectFace_entry (void *arg) {
         double t = 0;
         vector<Rect> faces;
         
+        pthread_mutex_lock (&my_mutex);
         rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
         Mat gray;
         cvtColor( dtf.img, gray, COLOR_BGR2GRAY );
@@ -130,6 +131,7 @@ void *detectFace_entry (void *arg) {
                 faces.push_back(Rect(dtf.smallImg.cols - r->x - r->width, r->y, r->width, r->height));
             }
         }
+        pthread_mutex_unlock (&my_mutex);
         t = (double)getTickCount() - t;
 
         #ifdef DEBUG_MODE 
@@ -142,6 +144,7 @@ void *detectFace_entry (void *arg) {
 void *drawFace_entry (void *arg) {
     while (1) {
         cout << "draw face thread!" << endl;
+        pthread_mutex_lock (&my_mutex);
         for ( size_t i = 0; i < dtf.faces.size(); i++ )
         {
             Rect r = dtf.faces[i];
@@ -164,6 +167,7 @@ void *drawFace_entry (void *arg) {
                         color, 3, 8, 0);
         }
         draw_Screen(dtf.img);
+        pthread_mutex_unlock (&my_mutex);
     }
 }
 
