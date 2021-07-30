@@ -132,7 +132,7 @@ void *detectFace_entry (void *arg) {
                 faces.push_back(Rect(dtf.smallImg.cols - r->x - r->width, r->y, r->width, r->height));
             }
         }
-        pthread_cond_signal (&my_convar, &my_mutex);
+        pthread_cond_signal (&my_convar);
         pthread_mutex_unlock (&my_mutex);
         t = (double)getTickCount() - t;
 
