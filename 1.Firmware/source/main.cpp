@@ -174,16 +174,16 @@ void *drawFace_entry (void *arg) {
 
 void *collectFace_entry (void *arg) {
     while (1) {
-        cout<<"snapshot"<<endl <<"Please enter your number:";
-        pthread_mutex_lock (&my_mutex);
-        int label;
-        cin >> label;
-        cout << "enter" << endl;
-        string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
-        mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-        cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
-        write_csv("../script/test.csv", imgname, label);
-        pthread_mutex_unlock (&my_mutex);
+        // cout<<"snapshot"<<endl <<"Please enter your number:";
+        // pthread_mutex_lock (&my_mutex);
+        // int label;
+        // cin >> label;
+        // cout << "enter" << endl;
+        // string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
+        // mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
+        // cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
+        // write_csv("../script/test.csv", imgname, label);
+        // pthread_mutex_unlock (&my_mutex);
     }
 }
 
