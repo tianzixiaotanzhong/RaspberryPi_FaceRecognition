@@ -1,3 +1,0 @@
-/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles/rebuild_cache.dir
-/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles/Demo.dir
-/home/pi/opencv-project/RaspberryPi_FaceRecognition/1.Firmware/CMakeFiles/edit_cache.dir

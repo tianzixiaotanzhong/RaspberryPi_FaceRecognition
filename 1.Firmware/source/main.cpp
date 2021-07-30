@@ -35,9 +35,6 @@ void draw_Screen (Mat input) {
     drawer.ShowImage("", input.data, ImgW, ImgH, nB);
 }
 
-vector<Mat> detectAndDraw( Mat& img, CascadeClassifier& cascade,
-                    CascadeClassifier& nestedCascade,
-                    double dtf.scale, bool dtf.tryflip );
 string cascadeName = "/home/pi/opencv-project/opencv/data/haarcascades/haarcascade_frontalface_alt.xml";
 string nestedCascadeName = "/home/pi/opencv-project/opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
 
@@ -54,20 +51,20 @@ const static Scalar colors[] =
 };
 
 typedef struct {
+    double scale;
+    bool tryflip;
     Mat img;
     Mat smallImg;
     Rect detectArea;
     vector<Rect> faces;
     CascadeClassifier cascade;
-    CascadeClassifier nestedCascade;
-    double dtf.scale;
-    bool dtf.tryflip
+    CascadeClassifier nestedCascade
 }dtf_structure;
 
 dtf_structure dtf;
 unordered_map<int, int> ump;
 
-void dft_init (void) {
+void dtf_init (void) {
     dtf.detectArea = Rect(200, 120, 240, 240);
     dtf.tryflip = false;
     dtf.scale = 1;
@@ -106,7 +103,7 @@ void *detectFace_entry (void *arg) {
     
     if( dtf.tryflip )
     {
-        flip(smallImg, smallImg, 1);
+        flip(dtf.smallImg, dtfsmallImg, 1);
         cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), faces,
                                  1.1, 2, 0
                                  //|CASCADE_FIND_BIGGEST_OBJECT
@@ -154,7 +151,7 @@ void *collectFace_entry (void *arg) {
     int label = 0;
     string imgname = format("../data/face%d/s%d.jpg", label, ++ump[label]);
     mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-    cout << imwrite(imgname, faceImgs[0]);
+    cout << imwrite(imgname, dtf.smallImg(faces[0]));
     write_csv("../script/test.csv", imgname, label);
 }
 
@@ -162,7 +159,7 @@ void *recognition_entry (void *arg) {
     if (dtf.faces.empty()) {
         pthread_exit((void*) 0);
     }
-    Mat testSample = dtf.img(dtf.faces[0]);
+    Mat testSample = dtf.smallImg(dtf.faces[0]);
     vector<Mat> imgs;
     vector<int> labels;
     read_csv("../script/test.csv", imgs, labels);
@@ -189,7 +186,7 @@ int main( int argc, const char** argv )
         return 1;
     }
     
-    
+    dtf_init();
     for (auto x: labels) {
         ump[x]++;
     }
