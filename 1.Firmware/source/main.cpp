@@ -31,36 +31,157 @@ int len = ImgPitch*ImgH;
 CDrawImg_Linux drawer;
 
 void draw_Screen (Mat input) {
-    //CDrawImg_Linux drawer;
-    //imwrite("../data/tmp.jpg", input);
-    //unsigned char* rb = ReadJPEG("../data/tmp.jpg", ImgW, ImgH, nB);
     cv::cvtColor(input, input, cv::COLOR_RGB2BGR);
     drawer.ShowImage("", input.data, ImgW, ImgH, nB);
-    //usleep(10000);
-    //delete [] rb;
-    //rb = null;
 }
 
 vector<Mat> detectAndDraw( Mat& img, CascadeClassifier& cascade,
                     CascadeClassifier& nestedCascade,
-                    double scale, bool tryflip );
+                    double dtf.scale, bool dtf.tryflip );
 string cascadeName = "/home/pi/opencv-project/opencv/data/haarcascades/haarcascade_frontalface_alt.xml";
 string nestedCascadeName = "/home/pi/opencv-project/opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
-int main( int argc, const char** argv )
+
+const static Scalar colors[] =
 {
-    VideoCapture capture;
-    Mat frame, image;
-    bool tryflip = false;
-    CascadeClassifier cascade, nestedCascade;
-    double scale = 1;
-    
-    if (!nestedCascade.load(samples::findFileOrKeep(nestedCascadeName)))
+    Scalar(255,0,0),
+    Scalar(255,128,0),
+    Scalar(255,255,0),
+    Scalar(0,255,0),
+    Scalar(0,128,255),
+    Scalar(0,255,255),
+    Scalar(0,0,255),
+    Scalar(255,0,255)
+};
+
+typedef struct {
+    Mat img;
+    Mat smallImg;
+    Rect detectArea;
+    vector<Rect> faces;
+    CascadeClassifier cascade;
+    CascadeClassifier nestedCascade;
+    double dtf.scale;
+    bool dtf.tryflip
+}dtf_structure;
+
+dtf_structure dtf;
+unordered_map<int, int> ump;
+
+void dft_init (void) {
+    dtf.detectArea = Rect(200, 120, 240, 240);
+    dtf.tryflip = false;
+    dtf.scale = 1;
+
+    if (!dtf.nestedCascade.load(samples::findFileOrKeep(nestedCascadeName)))
         cerr << "WARNING: Could not load classifier cascade for nested objects" << endl;
-    if (!cascade.load(samples::findFile(cascadeName)))
+    if (!dtf.cascade.load(samples::findFile(cascadeName)))
     {
         cerr << "ERROR: Could not load classifier cascade" << endl;
         return -1;
     }
+}
+
+
+void *detectFace_entry (void *arg) {
+    double t = 0;
+    vector<Rect> faces;
+    
+    rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
+    Mat gray;
+    cvtColor( dft.img, gray, COLOR_BGR2GRAY );
+    double fx = 1 / dtf.scale;
+    resize( gray, dtf.smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
+    equalizeHist( dtf.smallImg, dtf.smallImg );
+    t = (double)getTickCount();
+    cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), dtf.faces,
+        1.1, 2, 0
+        //|CASCADE_FIND_BIGGEST_OBJECT
+        //|CASCADE_DO_ROUGH_SEARCH
+        |CASCADE_SCALE_IMAGE,
+        Size(120, 120) );
+    for (auto &r: faces) {
+        r.x += dtf.detectArea.x;
+        r.y += dtf.detectArea.y;
+    }
+    
+    if( dtf.tryflip )
+    {
+        flip(smallImg, smallImg, 1);
+        cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), faces,
+                                 1.1, 2, 0
+                                 //|CASCADE_FIND_BIGGEST_OBJECT
+                                 //|CASCADE_DO_ROUGH_SEARCH
+                                 |CASCADE_SCALE_IMAGE,
+                                 Size(120, 120) );
+        for( vector<Rect>::const_iterator r = faces2.begin(); r != faces2.end(); ++r)
+        {
+            faces.push_back(Rect(dtf.detectArea.cols - r->x - r->width, r->y, r->width, r->height));
+        }
+    }
+    t = (double)getTickCount() - t;
+
+    #ifdef DEBUG_MODE 
+    printf( "detection time = %g ms\n", t*1000/getTickFrequency());
+    #endif 
+}
+
+void *drawFace_entry (void *arg) {
+    for ( size_t i = 0; i < dtf.faces.size(); i++ )
+    {
+        Rect r = dtf.faces[i];
+        Mat smallImgROI;
+        vector<Rect> nestedObjects;
+        Point center;
+        Scalar color = colors[i%8];
+        int radius;
+        double aspect_ratio = (double)r.width/r.height;
+        if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
+        {
+            center.x = cvRound((r.x + r.width*0.5)*dtf.scale);
+            center.y = cvRound((r.y + r.height*0.5)*dtf.scale);
+            radius = cvRound((r.width + r.height)*0.25*dtf.scale);
+            circle( dtf.img, center, radius, color, 3, 8, 0 );
+        }
+        else
+            rectangle( dtf.img, Point(cvRound(r.x*dtf.scale), cvRound(r.y*dtf.scale)),
+                       Point(cvRound((r.x + r.width-1)*dtf.scale), cvRound((r.y + r.height-1)*dtf.scale)),
+                       color, 3, 8, 0);
+    }
+}
+
+void *collectFace_entry (void *arg) {
+    cout<<"snapshot"<<endl;
+    int label = 0;
+    string imgname = format("../data/face%d/s%d.jpg", label, ++ump[label]);
+    mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
+    cout << imwrite(imgname, faceImgs[0]);
+    write_csv("../script/test.csv", imgname, label);
+}
+
+void *recognition_entry (void *arg) {
+    if (dtf.faces.empty()) {
+        pthread_exit((void*) 0);
+    }
+    Mat testSample = dtf.img(dtf.faces[0]);
+    vector<Mat> imgs;
+    vector<int> labels;
+    read_csv("../script/test.csv", imgs, labels);
+    if (imgs.empty()) {
+        cout << "Imgs is empty!" << endl;
+        continue;
+    }
+    Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
+    model->train(imgs, labels);
+    int predictedLabel = model->predict(dtf.img(dtf.faces));
+    string result_message = format("Predicted class = %d.", predictedLabel);
+    cout << result_message << endl;
+}
+
+int main( int argc, const char** argv )
+{
+    VideoCapture capture;
+    Mat frame, image;
+    
     int camera = -1;
     if(!capture.open(camera))
     {
@@ -68,10 +189,7 @@ int main( int argc, const char** argv )
         return 1;
     }
     
-    vector<Mat> srcImgs;
-    vector<int> labels;
-    read_csv("../script/test.csv", srcImgs, labels);
-    unordered_map<int, int> ump;
+    
     for (auto x: labels) {
         ump[x]++;
     }
@@ -89,18 +207,17 @@ int main( int argc, const char** argv )
             #ifdef DEBUG_MODE 
             cout << "-----" << frame1.size() << endl;
             #endif
-
-            vector<Mat> faceImgs = detectAndDraw( frame1, cascade, nestedCascade, scale, tryflip );
+            pthread_t dt_thd, df_thd, cf_thd, rg_thd;
+            dt_tid = pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
+            df_tid = pthread_create(&df_thd, NULL, drawFace_entry, (void*) 0);
+            void *status;
+            pthread_join(dt_thd, status);
+            pthread_join(df_thd, status);
             char c = 0;//(char)waitKey(10);
             if ( c == 27 || c == 'q' || c == 'Q' )
                 break;
             if ( c >= '0' && c <= '9' && !faceImgs.empty()) {
-                cout<<"snapshot"<<endl;
-                int label = c - '0';
-                string imgname = format("../data/face%d/s%d.jpg", label, ++ump[label]);
-                mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-                cout << imwrite(imgname, faceImgs[0]);
-                write_csv("../script/test.csv", imgname, label);
+                
             }
             if ((c == 'r' || c == 'R') && !faceImgs.empty()) {
                 Mat testSample = faceImgs[0];
@@ -121,88 +238,3 @@ int main( int argc, const char** argv )
     return 0;
 }
 
-vector<Mat> detectAndDraw( Mat& img, CascadeClassifier& cascade,
-                    CascadeClassifier& nestedCascade,
-                    double scale, bool tryflip )
-{
-    double t = 0;
-    vector<Rect> faces, faces2;
-    Rect detectArea = Rect(200, 120, 240, 240);
-    const static Scalar colors[] =
-    {
-        Scalar(255,0,0),
-        Scalar(255,128,0),
-        Scalar(255,255,0),
-        Scalar(0,255,0),
-        Scalar(0,128,255),
-        Scalar(0,255,255),
-        Scalar(0,0,255),
-        Scalar(255,0,255)
-    };
-    rectangle(img, detectArea, Scalar(0, 0, 255));
-    Mat gray, smallImg;
-    cvtColor( img, gray, COLOR_BGR2GRAY );
-    double fx = 1 / scale;
-    resize( gray, smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
-    equalizeHist( smallImg, smallImg );
-    t = (double)getTickCount();
-    cascade.detectMultiScale( smallImg(detectArea), faces,
-        1.1, 2, 0
-        //|CASCADE_FIND_BIGGEST_OBJECT
-        //|CASCADE_DO_ROUGH_SEARCH
-        |CASCADE_SCALE_IMAGE,
-        Size(120, 120) );
-    for (auto &r: faces) {
-        r.x += detectArea.x;
-        r.y += detectArea.y;
-    }
-    
-    if( tryflip )
-    {
-        flip(smallImg, smallImg, 1);
-        cascade.detectMultiScale( smallImg(detectArea), faces2,
-                                 1.1, 2, 0
-                                 //|CASCADE_FIND_BIGGEST_OBJECT
-                                 //|CASCADE_DO_ROUGH_SEARCH
-                                 |CASCADE_SCALE_IMAGE,
-                                 Size(120, 120) );
-        for( vector<Rect>::const_iterator r = faces2.begin(); r != faces2.end(); ++r)
-        {
-            faces.push_back(Rect(smallImg.cols - r->x - r->width, r->y, r->width, r->height));
-        }
-    }
-    t = (double)getTickCount() - t;
-
-    #ifdef DEBUG_MODE 
-    printf( "detection time = %g ms\n", t*1000/getTickFrequency());
-    #endif
-    
-    for ( size_t i = 0; i < faces.size(); i++ )
-    {
-        Rect r = faces[i];
-        Mat smallImgROI;
-        vector<Rect> nestedObjects;
-        Point center;
-        Scalar color = colors[i%8];
-        int radius;
-        double aspect_ratio = (double)r.width/r.height;
-        if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
-        {
-            center.x = cvRound((r.x + r.width*0.5)*scale);
-            center.y = cvRound((r.y + r.height*0.5)*scale);
-            radius = cvRound((r.width + r.height)*0.25*scale);
-            circle( img, center, radius, color, 3, 8, 0 );
-        }
-        else
-            rectangle( img, Point(cvRound(r.x*scale), cvRound(r.y*scale)),
-                       Point(cvRound((r.x + r.width-1)*scale), cvRound((r.y + r.height-1)*scale)),
-                       color, 3, 8, 0);
-    }
-    vector<Mat> faceImgs;
-    for (vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r) {
-        faceImgs.push_back(smallImg(*r));
-    }
-    imshow( "result", img );
-    draw_Screen(img);
-    return faceImgs;
-}
