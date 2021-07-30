@@ -92,102 +92,112 @@ int dtf_init (void) {
 
 
 void *detectFace_entry (void *arg) {
-    cout << "detect face thread!" << endl;
-    double t = 0;
-    vector<Rect> faces;
-    
-    rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
-    Mat gray;
-    cvtColor( dtf.img, gray, COLOR_BGR2GRAY );
-    double fx = 1 / dtf.scale;
-    resize( gray, dtf.smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
-    equalizeHist( dtf.smallImg, dtf.smallImg );
-    t = (double)getTickCount();
-    dtf.cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), dtf.faces,
-        1.1, 2, 0
-        //|CASCADE_FIND_BIGGEST_OBJECT
-        //|CASCADE_DO_ROUGH_SEARCH
-        |CASCADE_SCALE_IMAGE,
-        Size(120, 120) );
-    for (auto &r: dtf.faces) {
-        r.x += dtf.detectArea.x;
-        r.y += dtf.detectArea.y;
-    }
-    
-    if( dtf.tryflip )
+    while (1)
     {
-        flip(dtf.smallImg, dtf.smallImg, 1);
-        dtf.cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), faces,
-                                 1.1, 2, 0
-                                 //|CASCADE_FIND_BIGGEST_OBJECT
-                                 //|CASCADE_DO_ROUGH_SEARCH
-                                 |CASCADE_SCALE_IMAGE,
-                                 Size(120, 120) );
-        for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r)
-        {
-            faces.push_back(Rect(dtf.smallImg.cols - r->x - r->width, r->y, r->width, r->height));
+        cout << "detect face thread!" << endl;
+        double t = 0;
+        vector<Rect> faces;
+        
+        rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
+        Mat gray;
+        cvtColor( dtf.img, gray, COLOR_BGR2GRAY );
+        double fx = 1 / dtf.scale;
+        resize( gray, dtf.smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
+        equalizeHist( dtf.smallImg, dtf.smallImg );
+        t = (double)getTickCount();
+        dtf.cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), dtf.faces,
+            1.1, 2, 0
+            //|CASCADE_FIND_BIGGEST_OBJECT
+            //|CASCADE_DO_ROUGH_SEARCH
+            |CASCADE_SCALE_IMAGE,
+            Size(120, 120) );
+        for (auto &r: dtf.faces) {
+            r.x += dtf.detectArea.x;
+            r.y += dtf.detectArea.y;
         }
-    }
-    t = (double)getTickCount() - t;
+        
+        if( dtf.tryflip )
+        {
+            flip(dtf.smallImg, dtf.smallImg, 1);
+            dtf.cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), faces,
+                                    1.1, 2, 0
+                                    //|CASCADE_FIND_BIGGEST_OBJECT
+                                    //|CASCADE_DO_ROUGH_SEARCH
+                                    |CASCADE_SCALE_IMAGE,
+                                    Size(120, 120) );
+            for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r)
+            {
+                faces.push_back(Rect(dtf.smallImg.cols - r->x - r->width, r->y, r->width, r->height));
+            }
+        }
+        t = (double)getTickCount() - t;
 
-    #ifdef DEBUG_MODE 
-    printf( "detection time = %g ms\n", t*1000/getTickFrequency());
-    #endif 
+        #ifdef DEBUG_MODE 
+        printf( "detection time = %g ms\n", t*1000/getTickFrequency());
+        #endif 
+    }
+    
 }
 
 void *drawFace_entry (void *arg) {
-    cout << "draw face thread!" << endl;
-    for ( size_t i = 0; i < dtf.faces.size(); i++ )
-    {
-        Rect r = dtf.faces[i];
-        Mat smallImgROI;
-        vector<Rect> nestedObjects;
-        Point center;
-        Scalar color = colors[i%8];
-        int radius;
-        double aspect_ratio = (double)r.width/r.height;
-        if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
+    while (1) {
+        cout << "draw face thread!" << endl;
+        for ( size_t i = 0; i < dtf.faces.size(); i++ )
         {
-            center.x = cvRound((r.x + r.width*0.5)*dtf.scale);
-            center.y = cvRound((r.y + r.height*0.5)*dtf.scale);
-            radius = cvRound((r.width + r.height)*0.25*dtf.scale);
-            circle( dtf.img, center, radius, color, 3, 8, 0 );
+            Rect r = dtf.faces[i];
+            Mat smallImgROI;
+            vector<Rect> nestedObjects;
+            Point center;
+            Scalar color = colors[i%8];
+            int radius;
+            double aspect_ratio = (double)r.width/r.height;
+            if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
+            {
+                center.x = cvRound((r.x + r.width*0.5)*dtf.scale);
+                center.y = cvRound((r.y + r.height*0.5)*dtf.scale);
+                radius = cvRound((r.width + r.height)*0.25*dtf.scale);
+                circle( dtf.img, center, radius, color, 3, 8, 0 );
+            }
+            else
+                rectangle( dtf.img, Point(cvRound(r.x*dtf.scale), cvRound(r.y*dtf.scale)),
+                        Point(cvRound((r.x + r.width-1)*dtf.scale), cvRound((r.y + r.height-1)*dtf.scale)),
+                        color, 3, 8, 0);
         }
-        else
-            rectangle( dtf.img, Point(cvRound(r.x*dtf.scale), cvRound(r.y*dtf.scale)),
-                       Point(cvRound((r.x + r.width-1)*dtf.scale), cvRound((r.y + r.height-1)*dtf.scale)),
-                       color, 3, 8, 0);
+        draw_Screen(dtf.img);
     }
-    draw_Screen(dtf.img);
 }
 
 void *collectFace_entry (void *arg) {
-    cout<<"snapshot"<<endl <<"Please enter your number:";
-    int label;
-    cin >> label;
-    string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
-    mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-    cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
-    write_csv("../script/test.csv", imgname, label);
+    while (1) {
+        cout<<"snapshot"<<endl <<"Please enter your number:";
+        int label;
+        cin >> label;
+        string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
+        mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
+        cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
+        write_csv("../script/test.csv", imgname, label);
+    }
 }
 
 void *recognition_entry (void *arg) {
-    if (dtf.faces.empty()) {
-        pthread_exit((void*) 0);
+    while (1) {
+        if (dtf.faces.empty()) {
+            pthread_exit((void*) 0);
+        }
+        Mat testSample = dtf.smallImg(dtf.faces[0]);
+        vector<Mat> imgs;
+        vector<int> labels;
+        read_csv("../script/test.csv", imgs, labels);
+        if (imgs.empty()) {
+            cout << "Imgs is empty!" << endl;
+            pthread_exit((void*) 0);
+        }
+        Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
+        model->train(imgs, labels);
+        int predictedLabel = model->predict(dtf.img(dtf.faces[0]));
+        string result_message = format("Predicted class = %d.", predictedLabel);
+        cout << result_message << endl;
     }
-    Mat testSample = dtf.smallImg(dtf.faces[0]);
-    vector<Mat> imgs;
-    vector<int> labels;
-    read_csv("../script/test.csv", imgs, labels);
-    if (imgs.empty()) {
-        cout << "Imgs is empty!" << endl;
-        pthread_exit((void*) 0);
-    }
-    Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
-    model->train(imgs, labels);
-    int predictedLabel = model->predict(dtf.img(dtf.faces[0]));
-    string result_message = format("Predicted class = %d.", predictedLabel);
-    cout << result_message << endl;
 }
 
 int main( int argc, const char** argv )
@@ -208,24 +218,26 @@ int main( int argc, const char** argv )
     if( capture.isOpened() )
     {
         cout << "Video capturing has been started ..." << endl;
+        capture >> frame;
+        if( frame.empty() )
+            break;
+        dtf.img = frame.clone();
         pthread_t dt_thd, df_thd, cf_thd, rg_thd;
         int dt_tid, df_tid, cf_tid, rg_tid;
+        pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
+        pthread_create(&df_thd, NULL, drawFace_entry, (void*) 0);
+        pthread_create(&cf_thd, NULL, collectFace_entry, (void*) 0);
+        pthread_create(&rg_thd, NULL, recognition_entry, (void*) 0);
         for(;;)
         {
             capture >> frame;
             if( frame.empty() )
                 break;
-            Mat frame1 = frame.clone();
-            dtf.img = frame1;
+            dtf.img = frame.clone();
 
             #ifdef DEBUG_MODE 
             cout << "-----" << frame1.size() << endl;
             #endif
-            
-            pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
-            pthread_create(&df_thd, NULL, drawFace_entry, (void*) 0);
-            pthread_create(&cf_thd, NULL, collectFace_entry, (void*) 0);
-            pthread_create(&rg_thd, NULL, recognition_entry, (void*) 0);
             
         }
         void *status;
