@@ -117,7 +117,6 @@ void *detectFace_entry (void *arg) {
         smallImg = dtf_img.img.clone();
         pthread_mutex_unlock (&my_mutex);
 
-        rectangle(img, dtf_data.detectArea, Scalar(0, 0, 255));
         Mat gray;
         cvtColor(img, gray, COLOR_BGR2GRAY );
         double fx = 1 / dtf_data.scale;
@@ -200,6 +199,7 @@ void *drawFace_entry (void *arg) {
                         Point(cvRound((r.x + r.width-1)*dtf_data.scale), cvRound((r.y + r.height-1)*dtf_data.scale)),
                         color, 3, 8, 0);
         }
+        rectangle(img, dtf_data.detectArea, Scalar(0, 0, 255));
         draw_Screen(img);
         
         
