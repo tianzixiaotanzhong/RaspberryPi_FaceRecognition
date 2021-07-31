@@ -96,10 +96,9 @@ void *detectFace_entry (void *arg) {
     while (1)
     {
         cout << "detect face thread!" << endl;
+        pthread_mutex_lock (&my_mutex);
         double t = 0;
         vector<Rect> faces;
-        
-        pthread_mutex_lock (&my_mutex);
         rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
         Mat gray;
         cvtColor( dtf.img, gray, COLOR_BGR2GRAY );
@@ -133,8 +132,8 @@ void *detectFace_entry (void *arg) {
             }
         }
         //pthread_cond_signal (&my_convar);
-        pthread_mutex_unlock (&my_mutex);
         t = (double)getTickCount() - t;
+        pthread_mutex_unlock (&my_mutex);
 
         #ifdef DEBUG_MODE 
         printf( "detection time = %g ms\n", t*1000/getTickFrequency());
