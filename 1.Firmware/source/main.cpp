@@ -221,7 +221,7 @@ void *collectFace_entry (void *arg) {
         //»¥³âËø
         pthread_mutex_lock (&my_mutex);
         if (!dtf_img.faces.empty()) {
-            format("../data/face%d/s%d.jpg", label, ++dtf_img.ump[label]);
+            imgname = format("../data/face%d/s%d.jpg", label, ++dtf_img.ump[label]);
             mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
             imwrite(imgname, dtf_img.smallImg(dtf_img.faces[0]));
             write_csv("../script/test.csv", imgname, label);
