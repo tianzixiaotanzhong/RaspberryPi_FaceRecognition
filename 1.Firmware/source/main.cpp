@@ -145,70 +145,70 @@ void *detectFace_entry (void *arg) {
 void *drawFace_entry (void *arg) {
     while (1) {
         cout << "draw face thread!" << endl;
-        // pthread_mutex_lock (&my_mutex);
-        // pthread_cond_wait (&my_convar, &my_mutex);
-        // for ( size_t i = 0; i < dtf.faces.size(); i++ )
-        // {
-        //     Rect r = dtf.faces[i];
-        //     Mat smallImgROI;
-        //     vector<Rect> nestedObjects;
-        //     Point center;
-        //     Scalar color = colors[i%8];
-        //     int radius;
-        //     double aspect_ratio = (double)r.width/r.height;
-        //     if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
-        //     {
-        //         center.x = cvRound((r.x + r.width*0.5)*dtf.scale);
-        //         center.y = cvRound((r.y + r.height*0.5)*dtf.scale);
-        //         radius = cvRound((r.width + r.height)*0.25*dtf.scale);
-        //         circle( dtf.img, center, radius, color, 3, 8, 0 );
-        //     }
-        //     else
-        //         rectangle( dtf.img, Point(cvRound(r.x*dtf.scale), cvRound(r.y*dtf.scale)),
-        //                 Point(cvRound((r.x + r.width-1)*dtf.scale), cvRound((r.y + r.height-1)*dtf.scale)),
-        //                 color, 3, 8, 0);
-        // }
-        // draw_Screen(dtf.img);
-        // pthread_mutex_unlock (&my_mutex);
+        pthread_mutex_lock (&my_mutex);
+        pthread_cond_wait (&my_convar, &my_mutex);
+        for ( size_t i = 0; i < dtf.faces.size(); i++ )
+        {
+            Rect r = dtf.faces[i];
+            Mat smallImgROI;
+            vector<Rect> nestedObjects;
+            Point center;
+            Scalar color = colors[i%8];
+            int radius;
+            double aspect_ratio = (double)r.width/r.height;
+            if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
+            {
+                center.x = cvRound((r.x + r.width*0.5)*dtf.scale);
+                center.y = cvRound((r.y + r.height*0.5)*dtf.scale);
+                radius = cvRound((r.width + r.height)*0.25*dtf.scale);
+                circle( dtf.img, center, radius, color, 3, 8, 0 );
+            }
+            else
+                rectangle( dtf.img, Point(cvRound(r.x*dtf.scale), cvRound(r.y*dtf.scale)),
+                        Point(cvRound((r.x + r.width-1)*dtf.scale), cvRound((r.y + r.height-1)*dtf.scale)),
+                        color, 3, 8, 0);
+        }
+        draw_Screen(dtf.img);
+        pthread_mutex_unlock (&my_mutex);
     }
 }
 
 void *collectFace_entry (void *arg) {
     while (1) {
-        // cout<<"snapshot"<<endl <<"Please enter your number:";
-        // pthread_mutex_lock (&my_mutex);
-        // int label;
-        // cin >> label;
-        // cout << "enter" << endl;
-        // string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
-        // mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-        // cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
-        // write_csv("../script/test.csv", imgname, label);
-        // pthread_mutex_unlock (&my_mutex);
+        cout<<"snapshot"<<endl <<"Please enter your number:";
+        pthread_mutex_lock (&my_mutex);
+        int label;
+        cin >> label;
+        cout << "enter" << endl;
+        string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
+        mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
+        cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
+        write_csv("../script/test.csv", imgname, label);
+        pthread_mutex_unlock (&my_mutex);
     }
 }
 
 void *recognition_entry (void *arg) {
     while (1) {
-        // pthread_mutex_lock (&my_mutex);
-        // cout << "recognition face thread!" << endl;
-        // if (dtf.faces.empty()) {
-        //     pthread_exit((void*) 0);
-        // }
-        // Mat testSample = dtf.smallImg(dtf.faces[0]);
-        // vector<Mat> imgs;
-        // vector<int> labels;
-        // read_csv("../script/test.csv", imgs, labels);
-        // if (imgs.empty()) {
-        //     cout << "Imgs is empty!" << endl;
-        //     pthread_exit((void*) 0);
-        // }
-        // Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
-        // model->train(imgs, labels);
-        // int predictedLabel = model->predict(dtf.img(dtf.faces[0]));
-        // string result_message = format("Predicted class = %d.", predictedLabel);
-        // pthread_mutex_unlock (&my_mutex);
-        // cout << result_message << endl;
+        pthread_mutex_lock (&my_mutex);
+        cout << "recognition face thread!" << endl;
+        if (dtf.faces.empty()) {
+            pthread_exit((void*) 0);
+        }
+        Mat testSample = dtf.smallImg(dtf.faces[0]);
+        vector<Mat> imgs;
+        vector<int> labels;
+        read_csv("../script/test.csv", imgs, labels);
+        if (imgs.empty()) {
+            cout << "Imgs is empty!" << endl;
+            pthread_exit((void*) 0);
+        }
+        Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
+        model->train(imgs, labels);
+        int predictedLabel = model->predict(dtf.img(dtf.faces[0]));
+        string result_message = format("Predicted class = %d.", predictedLabel);
+        pthread_mutex_unlock (&my_mutex);
+        cout << result_message << endl;
     }
 }
 
