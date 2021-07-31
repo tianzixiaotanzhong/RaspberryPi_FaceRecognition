@@ -139,7 +139,7 @@ void *detectFace_entry (void *arg) {
         t = (double)getTickCount() - t;
         printf( "detection time = %g ms\n", t*1000/getTickFrequency());
         #endif 
-        usleep(20000);
+        usleep(10000);
     }
     
 }
@@ -174,7 +174,7 @@ void *drawFace_entry (void *arg) {
         // t = (double)getTickCount() - t;
         // printf( "detection time = %g ms\n", t*1000/getTickFrequency());
         pthread_mutex_unlock (&my_mutex);
-        usleep(20000);
+        usleep(10000);
     }
 }
 
