@@ -219,10 +219,9 @@ void *drawFace_entry (void *arg) {
 void *collectFace_entry (void *arg) {
     string imgname;
     while (1) {
-        cout<<"snapshot"<<endl <<"Please enter your number:";
+        cout << "Please enter your number:";
         int label;
         cin >> label;
-        cout << "enter" << endl;
         //»¥³âËø
         pthread_mutex_lock (&my_mutex);
         if (!dtf_img.faces.empty()) {
