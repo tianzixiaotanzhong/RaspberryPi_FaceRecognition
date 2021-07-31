@@ -176,11 +176,12 @@ void *drawFace_entry (void *arg) {
         
         pthread_mutex_unlock (&my_mutex);
         
-        usleep(5000);
+        
         #ifdef DEBUG_MODE 
         t = (double)getTickCount() - t;
         printf( "draw face time = %lf ms\n", t*1000/getTickFrequency());
         #endif
+        usleep(5000);
     }
 }
 
