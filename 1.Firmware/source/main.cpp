@@ -240,6 +240,7 @@ void *recognition_entry (void *arg) {
         //»¥³âËø
         pthread_mutex_lock (&my_mutex);
         if (dtf_img.faces.empty()) {
+            pthread_mutex_unlock (&my_mutex);
             continue;
         }
         pthread_mutex_unlock (&my_mutex);
