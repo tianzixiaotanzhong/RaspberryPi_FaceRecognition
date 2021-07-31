@@ -94,7 +94,7 @@ int dtf_init (void) {
 
 
 void *detectFace_entry (void *arg) {
-    double t = 0;
+    //double t = 0;
     while (1)
     {
         // cout << "detectFace_entry" << endl;
@@ -145,7 +145,7 @@ void *detectFace_entry (void *arg) {
 }
 
 void *drawFace_entry (void *arg) {
-    double t = 0;
+    static double t = 0;
     while (1) {
         // cout << "drawFace_entry" << endl;
         pthread_mutex_lock (&my_mutex);
