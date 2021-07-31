@@ -178,7 +178,7 @@ void *drawFace_entry (void *arg) {
         pthread_mutex_lock (&my_mutex);
         faces = dtf_img.faces;
         img = dtf_img.img.clone();
-        label = predictedLabel;
+        label = dtf_img.predictedLabel;
         pthread_mutex_unlock (&my_mutex);
         
         for ( size_t i = 0; i < faces.size(); i++ )
@@ -258,7 +258,7 @@ void *recognition_entry (void *arg) {
         pthread_mutex_lock (&my_mutex);
         dtf_img.predictedLabel = model->predict(dtf_img.smallImg(dtf_img.faces[0]));
         pthread_mutex_unlock (&my_mutex);
-        
+
         sleep(1);
         //cout << result_message << endl;
     }
