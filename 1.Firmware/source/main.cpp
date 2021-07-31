@@ -21,7 +21,7 @@ using namespace std;
 using namespace cv;
 using namespace cv::face;
 
-#define DEBUG_MODE
+//#define DEBUG_MODE
 
 int ImgW = 640;
 int ImgH = 480;
@@ -219,9 +219,11 @@ void *collectFace_entry (void *arg) {
         cout << "enter" << endl;
         //»¥³âËø
         pthread_mutex_lock (&my_mutex);
-        string imgname = format("../data/face%d/s%d.jpg", label, ++dtf_img.ump[label]);
-        mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-        imwrite(imgname, dtf_img.smallImg(dtf_img.faces[0]));
+        if (!dtf_img.faces.empty()) {
+            string imgname = format("../data/face%d/s%d.jpg", label, ++dtf_img.ump[label]);
+            mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
+            imwrite(imgname, dtf_img.smallImg(dtf_img.faces[0]));
+        }
         pthread_mutex_unlock (&my_mutex);
 
         write_csv("../script/test.csv", imgname, label);
