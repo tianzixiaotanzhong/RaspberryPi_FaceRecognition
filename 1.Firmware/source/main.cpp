@@ -117,13 +117,13 @@ void *detectFace_entry (void *arg) {
         smallImg = dtf_img.img.clone();
         pthread_mutex_unlock (&my_mutex);
 
-        rectangle(dtf_img.img, dtf_data.detectArea, Scalar(0, 0, 255));
+        rectangle(img, dtf_data.detectArea, Scalar(0, 0, 255));
         Mat gray;
-        cvtColor( dtf_img.img, gray, COLOR_BGR2GRAY );
+        cvtColor(img, gray, COLOR_BGR2GRAY );
         double fx = 1 / dtf_data.scale;
-        resize( gray, dtf_img.smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
-        equalizeHist( dtf_img.smallImg, dtf_img.smallImg );
-        dtf_data.cascade.detectMultiScale( dtf_img.smallImg(dtf_data.detectArea), faces,
+        resize( gray, smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
+        equalizeHist(smallImg, smallImg );
+        dtf_data.cascade.detectMultiScale(smallImg(dtf_data.detectArea), faces,
             1.1, 2, 0
             //|CASCADE_FIND_BIGGEST_OBJECT
             //|CASCADE_DO_ROUGH_SEARCH
@@ -136,8 +136,8 @@ void *detectFace_entry (void *arg) {
         
         if( dtf_data.tryflip )
         {
-            flip(dtf_img.smallImg, dtf_img.smallImg, 1);
-            dtf_data.cascade.detectMultiScale( dtf_img.smallImg(dtf_data.detectArea), face2,
+            flip(smallImg, smallImg, 1);
+            dtf_data.cascade.detectMultiScale(smallImg(dtf_data.detectArea), face2,
                                     1.1, 2, 0
                                     //|CASCADE_FIND_BIGGEST_OBJECT
                                     //|CASCADE_DO_ROUGH_SEARCH
