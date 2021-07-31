@@ -253,6 +253,7 @@ void *recognition_entry (void *arg) {
         string result_message = format("Predicted class = %2d.", predictedLabel);
         putText(dtf_img.img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
         pthread_mutex_unlock (&my_mutex);
+        sleep(1);
         //cout << result_message << endl;
     }
 }
