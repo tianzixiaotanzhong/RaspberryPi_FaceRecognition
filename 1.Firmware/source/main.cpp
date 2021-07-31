@@ -52,29 +52,35 @@ const static Scalar colors[] =
 };
 
 typedef struct {
-    double scale;
-    bool tryflip;
     Mat img;
     Mat smallImg;
-    Rect detectArea;
     vector<Rect> faces;
+    unordered_map<int, int> ump;
+}dtf_imgType;
+
+typedef struct {
+    double scale;
+    bool tryflip;
+    Rect detectArea;
     CascadeClassifier cascade;
     CascadeClassifier nestedCascade;
-    unordered_map<int, int> ump;
-}dtf_structure;
+}dtf_dataType;
 
-dtf_structure dtf;
+
+dtf_imgType dtf_img;
+dtf_dataType dtf_data;
+
 pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t my_convar = PTHREAD_COND_INITIALIZER;
 
 int dtf_init (void) {
-    dtf.detectArea = Rect(200, 120, 240, 240);
-    dtf.tryflip = false;
-    dtf.scale = 1;
+    dtf_data.detectArea = Rect(200, 120, 240, 240);
+    dtf_data.tryflip = false;
+    dtf_data.scale = 1;
 
-    if (!dtf.nestedCascade.load(samples::findFileOrKeep(nestedCascadeName)))
+    if (!dtf_data.nestedCascade.load(samples::findFileOrKeep(nestedCascadeName)))
         cerr << "WARNING: Could not load classifier cascade for nested objects" << endl;
-    if (!dtf.cascade.load(samples::findFile(cascadeName)))
+    if (!dtf_data.cascade.load(samples::findFile(cascadeName)))
     {
         cerr << "ERROR: Could not load classifier cascade" << endl;
         return -1;
@@ -88,7 +94,7 @@ int dtf_init (void) {
         return 0;
     }
     for (auto x: labels) {
-        dtf.ump[x]++;
+        dtf_img.ump[x]++;
     }
 }
 
@@ -98,43 +104,56 @@ void *detectFace_entry (void *arg) {
     while (1)
     {
         // cout << "detectFace_entry" << endl;
-        pthread_mutex_lock (&my_mutex);
+
         #ifdef DEBUG_MODE 
         t = (double)getTickCount();
         #endif
-        vector<Rect> faces;
-        rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
+        vector<Rect> faces, face2;
+        Mat img, smallIng;
+
+        //»¥³âËø
+        pthread_mutex_lock (&my_mutex);
+        img = dtf_img.img.clone();
+        smallIng = dtf_img.img.clone();
+        pthread_mutex_unlock (&my_mutex);
+
+        rectangle(dtf_img.img, dtf_data.detectArea, Scalar(0, 0, 255));
         Mat gray;
-        cvtColor( dtf.img, gray, COLOR_BGR2GRAY );
+        cvtColor( dtf_img.img, gray, COLOR_BGR2GRAY );
         double fx = 1 / dtf.scale;
-        resize( gray, dtf.smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
-        equalizeHist( dtf.smallImg, dtf.smallImg );
-        dtf.cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), dtf.faces,
+        resize( gray, dtf_img.smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
+        equalizeHist( dtf_img.smallImg, dtf_img.smallImg );
+        dtf_data.cascade.detectMultiScale( dtf_img.smallImg(dtf_data.detectArea), faces,
             1.1, 2, 0
             //|CASCADE_FIND_BIGGEST_OBJECT
             //|CASCADE_DO_ROUGH_SEARCH
             |CASCADE_SCALE_IMAGE,
             Size(120, 120) );
-        for (auto &r: dtf.faces) {
-            r.x += dtf.detectArea.x;
-            r.y += dtf.detectArea.y;
+        for (auto &r: faces) {
+            r.x += dtf_data.detectArea.x;
+            r.y += dtf_data.detectArea.y;
         }
         
-        if( dtf.tryflip )
+        if( dtf_data.tryflip )
         {
-            flip(dtf.smallImg, dtf.smallImg, 1);
-            dtf.cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), faces,
+            flip(dtf_img.smallImg, dtf_img.smallImg, 1);
+            dtf_data.cascade.detectMultiScale( dtf_img.smallImg(dtf_data.detectArea), face2,
                                     1.1, 2, 0
                                     //|CASCADE_FIND_BIGGEST_OBJECT
                                     //|CASCADE_DO_ROUGH_SEARCH
                                     |CASCADE_SCALE_IMAGE,
                                     Size(120, 120) );
-            for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); ++r)
+            for( vector<Rect>::const_iterator r = face2.begin(); r != face2.end(); ++r)
             {
                 faces.push_back(Rect(dtf.smallImg.cols - r->x - r->width, r->y, r->width, r->height));
             }
         }
-        //pthread_cond_signal (&my_convar);
+
+        //»¥³âËø
+        pthread_mutex_lock (&my_mutex);
+        dtf_img.img = img;
+        dtf_img.smallImg = smallImg;
+        dtf_img.faces = faces;
         pthread_mutex_unlock (&my_mutex);
 
         #ifdef DEBUG_MODE 
@@ -151,12 +170,18 @@ void *drawFace_entry (void *arg) {
     while (1) {
         // cout << "drawFace_entry" << endl;
         t = (double)getTickCount();
+        vector<Rect> faces;
+        Mat img;
+
+        //»¥³âËø
         pthread_mutex_lock (&my_mutex);
-        //pthread_cond_wait (&my_convar, &my_mutex);
+        faces = dtf_img.faces;
+        img = dtf_img.img.clone();
+        pthread_mutex_unlock (&my_mutex);
         
-        for ( size_t i = 0; i < dtf.faces.size(); i++ )
+        for ( size_t i = 0; i < faces.size(); i++ )
         {
-            Rect r = dtf.faces[i];
+            Rect r = faces[i];
             Mat smallImgROI;
             vector<Rect> nestedObjects;
             Point center;
@@ -168,15 +193,15 @@ void *drawFace_entry (void *arg) {
                 center.x = cvRound((r.x + r.width*0.5)*dtf.scale);
                 center.y = cvRound((r.y + r.height*0.5)*dtf.scale);
                 radius = cvRound((r.width + r.height)*0.25*dtf.scale);
-                circle( dtf.img, center, radius, color, 3, 8, 0 );
+                circle( img, center, radius, color, 3, 8, 0 );
             }
             else
-                rectangle( dtf.img, Point(cvRound(r.x*dtf.scale), cvRound(r.y*dtf.scale)),
+                rectangle( img, Point(cvRound(r.x*dtf.scale), cvRound(r.y*dtf.scale)),
                         Point(cvRound((r.x + r.width-1)*dtf.scale), cvRound((r.y + r.height-1)*dtf.scale)),
                         color, 3, 8, 0);
         }
-        draw_Screen(dtf.img);
-        pthread_mutex_unlock (&my_mutex);
+        draw_Screen(img);
+        
         
         usleep(1000);
         #ifdef DEBUG_MODE 
@@ -193,7 +218,7 @@ void *collectFace_entry (void *arg) {
         // int label;
         // cin >> label;
         // cout << "enter" << endl;
-        // string imgname = format("../data/face%d/s%d.jpg", label, ++dtf.ump[label]);
+        // string imgname = format("../data/face%d/s%d.jpg", label, ++dtf_img.ump[label]);
         // mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
         // cout << imwrite(imgname, dtf.smallImg(dtf.faces[0]));
         // write_csv("../script/test.csv", imgname, label);
@@ -245,7 +270,7 @@ int main( int argc, const char** argv )
     {
         cout << "Video capturing has been started ..." << endl;
         capture >> frame;
-        dtf.img = frame.clone();
+        dtf_img.img = frame.clone();
         pthread_t dt_thd, df_thd, cf_thd, rg_thd;
         int dt_tid, df_tid, cf_tid, rg_tid;
         pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
@@ -258,7 +283,7 @@ int main( int argc, const char** argv )
             if( frame.empty() )
                 break;
             pthread_mutex_lock (&my_mutex);
-            dtf.img = frame.clone();
+            dtf_img.img = frame.clone();
             pthread_mutex_unlock (&my_mutex);
 
             #ifdef DEBUG_MODE 

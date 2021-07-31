@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "F:/opencv4.5.3/build/install/include/**",
+                "F:/opencv4.5.3/build/install/include",
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/linux-draw/includes/libavcodec",
                 "${workspaceFolder}/linux-draw/includes/libavfilter",
