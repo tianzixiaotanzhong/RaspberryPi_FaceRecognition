@@ -244,7 +244,9 @@ int main( int argc, const char** argv )
             capture >> frame;
             if( frame.empty() )
                 break;
+            pthread_mutex_lock (&my_mutex);
             dtf.img = frame.clone();
+            pthread_mutex_unlock (&my_mutex);
 
             #ifdef DEBUG_MODE 
             cout << "-----" << frame1.size() << endl;
