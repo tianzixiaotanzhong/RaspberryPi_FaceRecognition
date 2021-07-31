@@ -150,7 +150,7 @@ void *drawFace_entry (void *arg) {
         // cout << "drawFace_entry" << endl;
         pthread_mutex_lock (&my_mutex);
         //pthread_cond_wait (&my_convar, &my_mutex);
-        t = (double)getTickCount();
+        //t = (double)getTickCount();
         for ( size_t i = 0; i < dtf.faces.size(); i++ )
         {
             Rect r = dtf.faces[i];
