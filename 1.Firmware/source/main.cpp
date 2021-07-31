@@ -95,7 +95,6 @@ int dtf_init (void) {
 void *detectFace_entry (void *arg) {
     while (1)
     {
-        cout << "detect face thread!" << endl;
         pthread_mutex_lock (&my_mutex);
         double t = 0;
         vector<Rect> faces;
@@ -144,7 +143,6 @@ void *detectFace_entry (void *arg) {
 
 void *drawFace_entry (void *arg) {
     while (1) {
-        cout << "draw face thread!" << endl;
         pthread_mutex_lock (&my_mutex);
         //pthread_cond_wait (&my_convar, &my_mutex);
         for ( size_t i = 0; i < dtf.faces.size(); i++ )
@@ -169,6 +167,8 @@ void *drawFace_entry (void *arg) {
                         color, 3, 8, 0);
         }
         draw_Screen(dtf.img);
+        t = (double)getTickCount() - t;
+        printf( "detection time = %g ms\n", t*1000/getTickFrequency());
         pthread_mutex_unlock (&my_mutex);
     }
 }
