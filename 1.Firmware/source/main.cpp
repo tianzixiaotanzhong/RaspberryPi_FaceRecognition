@@ -21,7 +21,7 @@ using namespace std;
 using namespace cv;
 using namespace cv::face;
 
-//#define DEBUG_MODE
+#define DEBUG_MODE
 
 int ImgW = 640;
 int ImgH = 480;
@@ -94,11 +94,12 @@ int dtf_init (void) {
 
 
 void *detectFace_entry (void *arg) {
+    double t = 0;
     while (1)
     {
         // cout << "detectFace_entry" << endl;
         pthread_mutex_lock (&my_mutex);
-        double t = 0;
+        
         vector<Rect> faces;
         rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
         Mat gray;
@@ -145,6 +146,7 @@ void *detectFace_entry (void *arg) {
 }
 
 void *drawFace_entry (void *arg) {
+    double t = 0;
     while (1) {
         // cout << "drawFace_entry" << endl;
         pthread_mutex_lock (&my_mutex);
@@ -171,8 +173,10 @@ void *drawFace_entry (void *arg) {
                         color, 3, 8, 0);
         }
         draw_Screen(dtf.img);
-        // t = (double)getTickCount() - t;
-        // printf( "detection time = %g ms\n", t*1000/getTickFrequency());
+        #ifdef DEBUG_MODE 
+        t = (double)getTickCount() - t;
+        printf( "draw face time = %g ms\n", t*1000/getTickFrequency());
+        #endif
         pthread_mutex_unlock (&my_mutex);
         usleep(10000);
     }
