@@ -137,8 +137,8 @@ void *detectFace_entry (void *arg) {
         pthread_mutex_unlock (&my_mutex);
 
         #ifdef DEBUG_MODE 
-        t = (double)getTickCount() - t;
-        printf( "detection time = %lf ms\n", t*1000/getTickFrequency());
+        // t = (double)getTickCount() - t;
+        // printf( "detection time = %lf ms\n", t*1000/getTickFrequency());
         #endif 
         usleep(5000);
     }
