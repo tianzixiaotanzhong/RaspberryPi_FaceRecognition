@@ -141,6 +141,7 @@ void *detectFace_entry (void *arg) {
     
 }
 
+double t = 0;
 void *drawFace_entry (void *arg) {
     while (1) {
         pthread_mutex_lock (&my_mutex);
@@ -167,7 +168,7 @@ void *drawFace_entry (void *arg) {
                         color, 3, 8, 0);
         }
         draw_Screen(dtf.img);
-        double t = (double)getTickCount() - t;
+        t = (double)getTickCount() - t;
         printf( "detection time = %g ms\n", t*1000/getTickFrequency());
         pthread_mutex_unlock (&my_mutex);
     }
