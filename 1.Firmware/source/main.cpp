@@ -247,9 +247,9 @@ void *recognition_entry (void *arg) {
         }
         Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
         model->train(imgs, labels);
-        int predictedLabel = model->predict(dtf.img(dtf.faces[0]));
+        int predictedLabel = model->predict(dtf.img(dtf_img.faces[0]));
         string result_message = format("Predicted class = %2d.", predictedLabel);
-        putText(dtf_img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 2, colors[6], 4);
+        putText(dtf_img.img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 2, colors[6], 4);
         pthread_mutex_unlock (&my_mutex);
         //cout << result_message << endl;
     }
