@@ -212,6 +212,7 @@ void *drawFace_entry (void *arg) {
 }
 
 void *collectFace_entry (void *arg) {
+    string imgname;
     while (1) {
         cout<<"snapshot"<<endl <<"Please enter your number:";
         int label;
@@ -220,13 +221,12 @@ void *collectFace_entry (void *arg) {
         //»¥³âËø
         pthread_mutex_lock (&my_mutex);
         if (!dtf_img.faces.empty()) {
-            string imgname = format("../data/face%d/s%d.jpg", label, ++dtf_img.ump[label]);
+            format("../data/face%d/s%d.jpg", label, ++dtf_img.ump[label]);
             mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
             imwrite(imgname, dtf_img.smallImg(dtf_img.faces[0]));
+            write_csv("../script/test.csv", imgname, label);
         }
         pthread_mutex_unlock (&my_mutex);
-
-        write_csv("../script/test.csv", imgname, label);
     }
 }
 
