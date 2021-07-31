@@ -145,11 +145,12 @@ void *detectFace_entry (void *arg) {
 }
 
 void *drawFace_entry (void *arg) {
-    static double t = 0;
+    double t = 0;
     while (1) {
         // cout << "drawFace_entry" << endl;
         pthread_mutex_lock (&my_mutex);
         //pthread_cond_wait (&my_convar, &my_mutex);
+        t = (double)getTickCount() - t;
         for ( size_t i = 0; i < dtf.faces.size(); i++ )
         {
             Rect r = dtf.faces[i];
@@ -176,10 +177,11 @@ void *drawFace_entry (void *arg) {
         pthread_mutex_unlock (&my_mutex);
         #ifdef DEBUG_MODE 
         cout << "t = " << t <<endl;
+        
+        usleep(5000);
         t = (double)getTickCount() - t;
         printf( "draw face time = %lf ms\n", t*1000/getTickFrequency());
         #endif
-        usleep(5000);
     }
 }
 
