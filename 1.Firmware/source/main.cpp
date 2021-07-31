@@ -114,13 +114,13 @@ void *detectFace_entry (void *arg) {
         //»¥³âËø
         pthread_mutex_lock (&my_mutex);
         img = dtf_img.img.clone();
-        smallIng = dtf_img.img.clone();
+        smallImg = dtf_img.img.clone();
         pthread_mutex_unlock (&my_mutex);
 
         rectangle(dtf_img.img, dtf_data.detectArea, Scalar(0, 0, 255));
         Mat gray;
         cvtColor( dtf_img.img, gray, COLOR_BGR2GRAY );
-        double fx = 1 / dtf.scale;
+        double fx = 1 / dtf_data.scale;
         resize( gray, dtf_img.smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
         equalizeHist( dtf_img.smallImg, dtf_img.smallImg );
         dtf_data.cascade.detectMultiScale( dtf_img.smallImg(dtf_data.detectArea), faces,
@@ -190,14 +190,14 @@ void *drawFace_entry (void *arg) {
             double aspect_ratio = (double)r.width/r.height;
             if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
             {
-                center.x = cvRound((r.x + r.width*0.5)*dtf.scale);
-                center.y = cvRound((r.y + r.height*0.5)*dtf.scale);
-                radius = cvRound((r.width + r.height)*0.25*dtf.scale);
+                center.x = cvRound((r.x + r.width*0.5)*dtf_data.scale);
+                center.y = cvRound((r.y + r.height*0.5)*dtf_data.scale);
+                radius = cvRound((r.width + r.height)*0.25*dtf_data.scale);
                 circle( img, center, radius, color, 3, 8, 0 );
             }
             else
-                rectangle( img, Point(cvRound(r.x*dtf.scale), cvRound(r.y*dtf.scale)),
-                        Point(cvRound((r.x + r.width-1)*dtf.scale), cvRound((r.y + r.height-1)*dtf.scale)),
+                rectangle( img, Point(cvRound(r.x*dtf_data.scale), cvRound(r.y*dtf_data.scale)),
+                        Point(cvRound((r.x + r.width-1)*dtf_data.scale), cvRound((r.y + r.height-1)*dtf_data.scale)),
                         color, 3, 8, 0);
         }
         draw_Screen(img);
