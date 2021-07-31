@@ -107,7 +107,6 @@ void *detectFace_entry (void *arg) {
         double fx = 1 / dtf.scale;
         resize( gray, dtf.smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
         equalizeHist( dtf.smallImg, dtf.smallImg );
-        t = (double)getTickCount();
         dtf.cascade.detectMultiScale( dtf.smallImg(dtf.detectArea), dtf.faces,
             1.1, 2, 0
             //|CASCADE_FIND_BIGGEST_OBJECT
