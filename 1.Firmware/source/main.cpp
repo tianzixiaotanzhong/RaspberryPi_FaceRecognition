@@ -168,8 +168,8 @@ void *drawFace_entry (void *arg) {
                         color, 3, 8, 0);
         }
         draw_Screen(dtf.img);
-        t = (double)getTickCount() - t;
-        printf( "detection time = %g ms\n", t*1000/getTickFrequency());
+        // t = (double)getTickCount() - t;
+        // printf( "detection time = %g ms\n", t*1000/getTickFrequency());
         pthread_mutex_unlock (&my_mutex);
     }
 }
