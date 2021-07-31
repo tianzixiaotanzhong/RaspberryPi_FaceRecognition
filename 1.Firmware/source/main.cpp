@@ -258,7 +258,7 @@ int main( int argc, const char** argv )
             pthread_mutex_unlock (&my_mutex);
 
             #ifdef DEBUG_MODE 
-            cout << "-----" << frame1.size() << endl;
+            cout << "-----" << frame.size() << endl;
             #endif
             
         }
