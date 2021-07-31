@@ -15,6 +15,7 @@
 #include "readjpg.h"
 #include "GenVedio.h"
 #include "my_csv.h"
+#include <unistd.h>
 //#include <unistd.h>
 using namespace std;
 using namespace cv;
@@ -174,6 +175,7 @@ void *drawFace_entry (void *arg) {
         // t = (double)getTickCount() - t;
         // printf( "detection time = %g ms\n", t*1000/getTickFrequency());
         pthread_mutex_unlock (&my_mutex);
+        usleep(1000);
     }
 }
 
