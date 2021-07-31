@@ -151,7 +151,7 @@ void *detectFace_entry (void *arg) {
 
         //»¥³âËø
         pthread_mutex_lock (&my_mutex);
-        dtf_img.img = img;
+        //dtf_img.img = img;
         dtf_img.smallImg = smallImg;
         dtf_img.faces = faces;
         pthread_mutex_unlock (&my_mutex);
