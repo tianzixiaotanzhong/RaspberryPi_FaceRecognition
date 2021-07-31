@@ -98,7 +98,6 @@ void *detectFace_entry (void *arg) {
     {
         // cout << "detectFace_entry" << endl;
         pthread_mutex_lock (&my_mutex);
-        cout << "detectFace_entry" << endl;
         double t = 0;
         vector<Rect> faces;
         rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
@@ -148,7 +147,6 @@ void *drawFace_entry (void *arg) {
     while (1) {
         // cout << "drawFace_entry" << endl;
         pthread_mutex_lock (&my_mutex);
-        cout << "drawFace_entry" << endl;
         //pthread_cond_wait (&my_convar, &my_mutex);
         for ( size_t i = 0; i < dtf.faces.size(); i++ )
         {
@@ -175,7 +173,7 @@ void *drawFace_entry (void *arg) {
         // t = (double)getTickCount() - t;
         // printf( "detection time = %g ms\n", t*1000/getTickFrequency());
         pthread_mutex_unlock (&my_mutex);
-        usleep(1000);
+        usleep(10000);
     }
 }
 
