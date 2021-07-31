@@ -56,6 +56,7 @@ typedef struct {
     Mat smallImg;
     vector<Rect> faces;
     unordered_map<int, int> ump;
+    int predictedLabel;
 }dtf_imgType;
 
 typedef struct {
@@ -171,11 +172,13 @@ void *drawFace_entry (void *arg) {
         t = (double)getTickCount();
         vector<Rect> faces;
         Mat img;
+        int label;
 
         //»¥³âËø
         pthread_mutex_lock (&my_mutex);
         faces = dtf_img.faces;
         img = dtf_img.img.clone();
+        label = predictedLabel;
         pthread_mutex_unlock (&my_mutex);
         
         for ( size_t i = 0; i < faces.size(); i++ )
@@ -200,6 +203,8 @@ void *drawFace_entry (void *arg) {
                         color, 3, 8, 0);
         }
         rectangle(img, dtf_data.detectArea, Scalar(0, 0, 255));
+        string result_message = format("Predicted class = %2d.", label);
+        putText(img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
         draw_Screen(img);
         
         
@@ -232,27 +237,28 @@ void *collectFace_entry (void *arg) {
 
 void *recognition_entry (void *arg) {
     while (1) {
+        //»¥³âËø
         pthread_mutex_lock (&my_mutex);
-        //cout << "recognition face thread!" << endl;
         if (dtf_img.faces.empty()) {
-            pthread_mutex_unlock (&my_mutex);
             continue;
         }
-        Mat testSample = dtf_img.smallImg(dtf_img.faces[0]);
+        pthread_mutex_unlock (&my_mutex);
+
         vector<Mat> imgs;
         vector<int> labels;
         read_csv("../script/test.csv", imgs, labels);
         if (imgs.empty()) {
             cout << "Imgs is empty!" << endl;
-            pthread_mutex_unlock (&my_mutex);
             continue;
         }
         Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
         model->train(imgs, labels);
-        int predictedLabel = model->predict(dtf_img.smallImg(dtf_img.faces[0]));
-        string result_message = format("Predicted class = %2d.", predictedLabel);
-        putText(dtf_img.img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
+
+        //»¥³âËø
+        pthread_mutex_lock (&my_mutex);
+        dtf_img.predictedLabel = model->predict(dtf_img.smallImg(dtf_img.faces[0]));
         pthread_mutex_unlock (&my_mutex);
+        
         sleep(1);
         //cout << result_message << endl;
     }
