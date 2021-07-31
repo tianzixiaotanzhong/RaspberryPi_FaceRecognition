@@ -141,7 +141,6 @@ void *detectFace_entry (void *arg) {
     
 }
 
-double t = 0;
 void *drawFace_entry (void *arg) {
     while (1) {
         pthread_mutex_lock (&my_mutex);
