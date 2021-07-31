@@ -235,7 +235,8 @@ void *recognition_entry (void *arg) {
         pthread_mutex_lock (&my_mutex);
         //cout << "recognition face thread!" << endl;
         if (dtf_img.faces.empty()) {
-            pthread_exit((void*) 0);
+            pthread_mutex_unlock (&my_mutex);
+            continue;
         }
         Mat testSample = dtf_img.smallImg(dtf_img.faces[0]);
         vector<Mat> imgs;
@@ -243,7 +244,8 @@ void *recognition_entry (void *arg) {
         read_csv("../script/test.csv", imgs, labels);
         if (imgs.empty()) {
             cout << "Imgs is empty!" << endl;
-            pthread_exit((void*) 0);
+            pthread_mutex_unlock (&my_mutex);
+            continue;
         }
         Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
         model->train(imgs, labels);
