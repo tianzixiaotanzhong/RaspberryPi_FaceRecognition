@@ -109,7 +109,7 @@ void *detectFace_entry (void *arg) {
         t = (double)getTickCount();
         #endif
         vector<Rect> faces, face2;
-        Mat img, smallIng;
+        Mat img, smallImg;
 
         //»¥³âËø
         pthread_mutex_lock (&my_mutex);
@@ -145,7 +145,7 @@ void *detectFace_entry (void *arg) {
                                     Size(120, 120) );
             for( vector<Rect>::const_iterator r = face2.begin(); r != face2.end(); ++r)
             {
-                faces.push_back(Rect(dtf.smallImg.cols - r->x - r->width, r->y, r->width, r->height));
+                faces.push_back(Rect(smallImg.cols - r->x - r->width, r->y, r->width, r->height));
             }
         }
 
