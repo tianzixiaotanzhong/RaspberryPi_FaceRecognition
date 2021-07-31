@@ -138,7 +138,7 @@ void *detectFace_entry (void *arg) {
 
         #ifdef DEBUG_MODE 
         t = (double)getTickCount() - t;
-        printf( "detection time = %g ms\n", t*1000/getTickFrequency());
+        printf( "detection time = %lf ms\n", t*1000/getTickFrequency());
         #endif 
         usleep(5000);
     }
@@ -177,7 +177,7 @@ void *drawFace_entry (void *arg) {
         pthread_mutex_unlock (&my_mutex);
         #ifdef DEBUG_MODE 
         t = (double)getTickCount() - t;
-        printf( "draw face time = %g ms\n", t*1000/getTickFrequency());
+        printf( "draw face time = %lf ms\n", t*1000/getTickFrequency());
         #endif
         usleep(5000);
     }
