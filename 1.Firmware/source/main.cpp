@@ -100,7 +100,7 @@ void *detectFace_entry (void *arg) {
         // cout << "detectFace_entry" << endl;
         pthread_mutex_lock (&my_mutex);
         #ifdef DEBUG_MODE 
-        t = (double)getTickCount() - t;
+        t = (double)getTickCount();
         #endif
         vector<Rect> faces;
         rectangle(dtf.img, dtf.detectArea, Scalar(0, 0, 255));
