@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <deque>
 #include <unordered_map>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -28,6 +29,9 @@ int ImgH = 480;
 int nB = 3;
 int ImgPitch = ROUND4(ImgW*3);
 int len = ImgPitch*ImgH;
+
+deque<Mat> img_dq;
+deque<Rect> rec_area_dq;
 
 CDrawImg_Linux drawer;
 
@@ -53,16 +57,15 @@ const static Scalar colors[] =
 
 typedef struct {
     Mat img;
-    Mat smallImg;
-    vector<Rect> faces;
-    unordered_map<int, int> ump;
-    int predictedLabel;
+    vector<Rect> faces
 }dtf_imgType;
 
 typedef struct {
     double scale;
     bool tryflip;
+    int predictedLabel;
     Rect detectArea;
+    unordered_map<int, int> ump;
     CascadeClassifier cascade;
     CascadeClassifier nestedCascade;
 }dtf_dataType;
@@ -95,7 +98,7 @@ int dtf_init (void) {
         return 0;
     }
     for (auto x: labels) {
-        dtf_img.ump[x]++;
+        dtf_data.ump[x]++;
     }
 }
 
@@ -110,20 +113,16 @@ void *detectFace_entry (void *arg) {
         t = (double)getTickCount();
         #endif
         vector<Rect> faces, face2;
-        Mat img, smallImg;
-
-        //»¥³âËø
-        pthread_mutex_lock (&my_mutex);
-        img = dtf_img.img.clone();
-        smallImg = dtf_img.img.clone();
-        pthread_mutex_unlock (&my_mutex);
-
+        if (img_dq.empty()) {
+            continue;
+        }
+        Mat img = img_dq.back();
+        img_dq.pop_back();
         Mat gray;
         cvtColor(img, gray, COLOR_BGR2GRAY );
-        double fx = 1 / dtf_data.scale;
-        resize( gray, smallImg, Size(), fx, fx, INTER_LINEAR_EXACT );
-        equalizeHist(smallImg, smallImg );
-        dtf_data.cascade.detectMultiScale(smallImg(dtf_data.detectArea), faces,
+        
+        equalizeHist(gray, gray );
+        dtf_data.cascade.detectMultiScale(gray(dtf_data.detectArea), faces,
             1.1, 2, 0
             //|CASCADE_FIND_BIGGEST_OBJECT
             //|CASCADE_DO_ROUGH_SEARCH
@@ -136,8 +135,8 @@ void *detectFace_entry (void *arg) {
         
         if( dtf_data.tryflip )
         {
-            flip(smallImg, smallImg, 1);
-            dtf_data.cascade.detectMultiScale(smallImg(dtf_data.detectArea), face2,
+            flip(gray, gray, 1);
+            dtf_data.cascade.detectMultiScale(gray(dtf_data.detectArea), face2,
                                     1.1, 2, 0
                                     //|CASCADE_FIND_BIGGEST_OBJECT
                                     //|CASCADE_DO_ROUGH_SEARCH
@@ -145,16 +144,13 @@ void *detectFace_entry (void *arg) {
                                     Size(120, 120) );
             for( vector<Rect>::const_iterator r = face2.begin(); r != face2.end(); ++r)
             {
-                faces.push_back(Rect(smallImg.cols - r->x - r->width, r->y, r->width, r->height));
+                faces.push_back(Rect(gray.cols - r->x - r->width, r->y, r->width, r->height));
             }
         }
 
-        //»¥³âËø
-        pthread_mutex_lock (&my_mutex);
-        //dtf_img.img = img;
-        dtf_img.smallImg = smallImg;
-        dtf_img.faces = faces;
-        pthread_mutex_unlock (&my_mutex);
+        if (!faces.empty()) {
+            rec_area_dq.push_back(faces[0]);
+        }
 
         #ifdef DEBUG_MODE 
         t = (double)getTickCount() - t;
@@ -165,43 +161,72 @@ void *detectFace_entry (void *arg) {
     
 }
 
+void *recognition_entry (void *arg) {
+    while (1) {
+        if (rec_area_dq.empty()) {
+            dtf_data.predictedLabel = 0;
+            continue;
+        }
+
+        vector<Mat> imgs;
+        vector<int> labels;
+        read_csv("../script/test.csv", imgs, labels);
+        if (imgs.empty()) {
+            cout << "Imgs is empty!" << endl;
+            continue;
+        }
+        Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
+        model->train(imgs, labels);
+
+        dtf_data.predictedLabel = model->predict(img_dq.back()[rec_area_dq.back()]);
+
+        usleep(1000);
+        //cout << result_message << endl;
+    }
+}
+
+Mat col_img;
+Rect col_area;
+
 void *drawFace_entry (void *arg) {
     double t = 0;
     while (1) {
         // cout << "drawFace_entry" << endl;
         t = (double)getTickCount();
-        vector<Rect> faces;
-        Mat img;
-        int label;
-
-        //»¥³âËø
-        pthread_mutex_lock (&my_mutex);
-        faces = dtf_img.faces;
-        img = dtf_img.img.clone();
-        label = dtf_img.predictedLabel;
-        pthread_mutex_unlock (&my_mutex);
         
-        for ( size_t i = 0; i < faces.size(); i++ )
-        {
-            Rect r = faces[i];
-            Mat smallImgROI;
-            vector<Rect> nestedObjects;
-            Point center;
-            Scalar color = colors[i%8];
-            int radius;
-            double aspect_ratio = (double)r.width/r.height;
-            if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
-            {
-                center.x = cvRound((r.x + r.width*0.5)*dtf_data.scale);
-                center.y = cvRound((r.y + r.height*0.5)*dtf_data.scale);
-                radius = cvRound((r.width + r.height)*0.25*dtf_data.scale);
-                circle( img, center, radius, color, 3, 8, 0 );
-            }
-            else
-                rectangle( img, Point(cvRound(r.x*dtf_data.scale), cvRound(r.y*dtf_data.scale)),
-                        Point(cvRound((r.x + r.width-1)*dtf_data.scale), cvRound((r.y + r.height-1)*dtf_data.scale)),
-                        color, 3, 8, 0);
+        col_img = NULL;
+        col_area = NULL;
+        if (img_dq.empty() || rec_area_dq.empty()) {
+            continue;
         }
+        Mat img = img_dq.back().clone();
+        Rect face = rec_area_dq.back();
+        int label = dtf_data.predictedLabel;
+        col_img = img.clone();
+        col_area = face;
+        img_dq.pop_back();
+        rec_area_dq.pop_back();
+        
+        //±ê¼ÇÁ³²¿ÇøÓò
+        Rect r = face;
+        Mat smallImgROI;
+        vector<Rect> nestedObjects;
+        Point center;
+        Scalar color = colors[i%8];
+        int radius;
+        double aspect_ratio = (double)r.width/r.height;
+        if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
+        {
+            center.x = cvRound((r.x + r.width*0.5)*dtf_data.scale);
+            center.y = cvRound((r.y + r.height*0.5)*dtf_data.scale);
+            radius = cvRound((r.width + r.height)*0.25*dtf_data.scale);
+            circle( img, center, radius, color, 3, 8, 0 );
+        }
+        else
+            rectangle( img, Point(cvRound(r.x*dtf_data.scale), cvRound(r.y*dtf_data.scale)),
+                    Point(cvRound((r.x + r.width-1)*dtf_data.scale), cvRound((r.y + r.height-1)*dtf_data.scale)),
+                    color, 3, 8, 0);
+
         rectangle(img, dtf_data.detectArea, Scalar(0, 0, 255));
         string result_message = format("Predicted class = %2d.", label);
         putText(img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
@@ -218,52 +243,21 @@ void *drawFace_entry (void *arg) {
 
 void *collectFace_entry (void *arg) {
     string imgname;
+    Mat gray;
     while (1) {
         cout << "Please enter your number:";
         int label;
         cin >> label;
-        //»¥³âËø
-        pthread_mutex_lock (&my_mutex);
-        if (!dtf_img.faces.empty()) {
-            imgname = format("../data/face%d/s%d.jpg", label, ++dtf_img.ump[label]);
+        if (col_img != NULL && col_area != NULL) {
+            cvtColor(col_img, gray, COLOR_BGR2GRAY)
+            imgname = format("../data/face%d/s%d.jpg", label, ++dtf_data.ump[label]);
             mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-            imwrite(imgname, dtf_img.smallImg(dtf_img.faces[0]));
+            imwrite(imgname, gray(col_area));
             write_csv("../script/test.csv", imgname, label);
         }
-        pthread_mutex_unlock (&my_mutex);
     }
 }
 
-void *recognition_entry (void *arg) {
-    while (1) {
-        //»¥³âËø
-        pthread_mutex_lock (&my_mutex);
-        if (dtf_img.faces.empty()) {
-            dtf_img.predictedLabel = 0;
-            pthread_mutex_unlock (&my_mutex);
-            continue;
-        }
-        pthread_mutex_unlock (&my_mutex);
-
-        vector<Mat> imgs;
-        vector<int> labels;
-        read_csv("../script/test.csv", imgs, labels);
-        if (imgs.empty()) {
-            cout << "Imgs is empty!" << endl;
-            continue;
-        }
-        Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
-        model->train(imgs, labels);
-
-        //»¥³âËø
-        pthread_mutex_lock (&my_mutex);
-        dtf_img.predictedLabel = model->predict(dtf_img.smallImg(dtf_img.faces[0]));
-        pthread_mutex_unlock (&my_mutex);
-
-        sleep(1);
-        //cout << result_message << endl;
-    }
-}
 
 int main( int argc, const char** argv )
 {
@@ -297,10 +291,10 @@ int main( int argc, const char** argv )
             capture >> frame;
             if( frame.empty() )
                 break;
-            pthread_mutex_lock (&my_mutex);
-            dtf_img.img = frame.clone();
-            pthread_mutex_unlock (&my_mutex);
-
+            img_dq.push_back(frame.clone());
+            if (img_dq.size() >= 10) {
+                img_dq.pop_front();
+            }
             #ifdef DEBUG_MODE 
             cout << "-----" << frame.size() << endl;
             #endif
