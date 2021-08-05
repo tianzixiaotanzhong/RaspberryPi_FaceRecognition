@@ -150,7 +150,7 @@ void *detectFace_entry (void *arg) {
         t = (double)getTickCount() - t;
         printf( "detection time = %lf ms\n", t*1000/getTickFrequency());
         #endif 
-        usleep(1000);
+        // usleep(1000);
     }
     
 }
@@ -175,7 +175,7 @@ void *recognition_entry (void *arg) {
 
         dtf_data.predictedLabel = model->predict(img_dq.back()(rec_area_dq.back()));
 
-        usleep(1000);
+        // usleep(1000);
         //cout << result_message << endl;
     }
 }
@@ -228,7 +228,7 @@ void *drawFace_entry (void *arg) {
         draw_Screen(img);
         
         
-        usleep(1000);
+        // usleep(1000);
         #ifdef DEBUG_MODE 
         t = (double)getTickCount() - t;
         printf( "draw face time = %lf ms\n", t*1000/getTickFrequency());
