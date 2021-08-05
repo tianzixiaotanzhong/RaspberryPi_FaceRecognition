@@ -55,10 +55,6 @@ const static Scalar colors[] =
     Scalar(255,0,255)
 };
 
-typedef struct {
-    Mat img;
-    vector<Rect> faces;
-}dtf_imgType;
 
 typedef struct {
     double scale;
@@ -71,7 +67,6 @@ typedef struct {
 }dtf_dataType;
 
 
-dtf_imgType dtf_img;
 dtf_dataType dtf_data;
 
 pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -277,7 +272,6 @@ int main( int argc, const char** argv )
     {
         cout << "Video capturing has been started ..." << endl;
         capture >> frame;
-        dtf_img.img = frame.clone();
         pthread_t dt_thd, df_thd, cf_thd, rg_thd;
         int dt_tid, df_tid, cf_tid, rg_tid;
         pthread_create(&dt_thd, NULL, detectFace_entry, (void*) 0);
