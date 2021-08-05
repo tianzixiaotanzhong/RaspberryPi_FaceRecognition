@@ -287,10 +287,12 @@ int main( int argc, const char** argv )
             capture >> frame;
             if( frame.empty() )
                 break;
-            img_dq.push_back(frame.clone());
             if (img_dq.size() >= 10) {
-                img_dq.pop_front();
+                continue;
+                //img_dq.pop_front();
             }
+            img_dq.push_back(frame.clone());
+            
             #ifdef DEBUG_MODE 
             cout << "-----" << frame.size() << endl;
             #endif
