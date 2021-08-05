@@ -194,14 +194,15 @@ void *drawFace_entry (void *arg) {
         Mat img = img_dq.back().clone();
         
         int label = dtf_data.predictedLabel;
-        col_img = img.clone();
-        col_area = face;
+        
         img_dq.pop_back();
         rec_area_dq.pop_back();
         
         //标记脸部区域
         if (!rec_area_dq.empty()) {
             Rect r = rec_area_dq.back();
+            col_img = img.clone();
+            col_area = r;
             Mat smallImgROI;
             vector<Rect> nestedObjects;
             Point center;
