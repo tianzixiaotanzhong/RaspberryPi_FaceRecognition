@@ -111,7 +111,7 @@ void *detectFace_entry (void *arg) {
         if (img_dq.empty()) {
             continue;
         }
-        Mat img = img_dq.back();
+        Mat img = img_dq.front();
         Mat gray;
         cvtColor(img, gray, COLOR_BGR2GRAY );
         
@@ -200,7 +200,7 @@ void *drawFace_entry (void *arg) {
         
         //标记脸部区域
         if (!rec_area_dq.empty()) {
-            Rect r = rec_area_dq.back();
+            Rect r = rec_area_dq.front();
             col_img = img.clone();
             col_area = r;
             Mat smallImgROI;
