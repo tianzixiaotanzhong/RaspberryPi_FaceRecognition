@@ -102,7 +102,7 @@ void *detectFace_entry (void *arg) {
     double t = 0;
     while (1)
     {
-        // cout << "detectFace_entry" << endl;
+        cout << "detectFace_entry" << endl;
 
         #ifdef DEBUG_MODE 
         t = (double)getTickCount();
@@ -157,6 +157,7 @@ void *detectFace_entry (void *arg) {
 
 void *recognition_entry (void *arg) {
     while (1) {
+        cout << "recognition_entry" << endl;
         if (rec_area_dq.empty()) {
             dtf_data.predictedLabel = 0;
             continue;
@@ -185,7 +186,7 @@ Rect col_area;
 void *drawFace_entry (void *arg) {
     double t = 0;
     while (1) {
-        // cout << "drawFace_entry" << endl;
+        cout << "drawFace_entry" << endl;
         t = (double)getTickCount();
         
         if (img_dq.empty()) {
