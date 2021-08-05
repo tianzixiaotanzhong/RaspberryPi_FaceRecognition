@@ -57,7 +57,7 @@ const static Scalar colors[] =
 
 typedef struct {
     Mat img;
-    vector<Rect> faces
+    vector<Rect> faces;
 }dtf_imgType;
 
 typedef struct {
@@ -178,7 +178,7 @@ void *recognition_entry (void *arg) {
         Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
         model->train(imgs, labels);
 
-        dtf_data.predictedLabel = model->predict(img_dq.back()[rec_area_dq.back()]);
+        dtf_data.predictedLabel = model->predict(img_dq.back()(rec_area_dq.back()));
 
         usleep(1000);
         //cout << result_message << endl;
@@ -194,8 +194,6 @@ void *drawFace_entry (void *arg) {
         // cout << "drawFace_entry" << endl;
         t = (double)getTickCount();
         
-        col_img = NULL;
-        col_area = NULL;
         if (img_dq.empty() || rec_area_dq.empty()) {
             continue;
         }
@@ -212,7 +210,7 @@ void *drawFace_entry (void *arg) {
         Mat smallImgROI;
         vector<Rect> nestedObjects;
         Point center;
-        Scalar color = colors[i%8];
+        Scalar color = colors[0];
         int radius;
         double aspect_ratio = (double)r.width/r.height;
         if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
@@ -248,8 +246,8 @@ void *collectFace_entry (void *arg) {
         cout << "Please enter your number:";
         int label;
         cin >> label;
-        if (col_img != NULL && col_area != NULL) {
-            cvtColor(col_img, gray, COLOR_BGR2GRAY)
+        if (!col_img.empty() && !col_area.empty()) {
+            cvtColor(col_img, gray, COLOR_BGR2GRAY);
             imgname = format("../data/face%d/s%d.jpg", label, ++dtf_data.ump[label]);
             mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
             imwrite(imgname, gray(col_area));
