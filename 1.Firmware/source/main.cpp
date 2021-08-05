@@ -199,28 +199,28 @@ void *drawFace_entry (void *arg) {
         
         
         //标记脸部区域
-        if (!rec_area_dq.empty()) {
-            Rect r = rec_area_dq.front();
-            col_img = img.clone();
-            col_area = r;
-            Mat smallImgROI;
-            vector<Rect> nestedObjects;
-            Point center;
-            Scalar color = colors[0];
-            int radius;
-            double aspect_ratio = (double)r.width/r.height;
-            if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
-            {
-                center.x = cvRound((r.x + r.width*0.5)*dtf_data.scale);
-                center.y = cvRound((r.y + r.height*0.5)*dtf_data.scale);
-                radius = cvRound((r.width + r.height)*0.25*dtf_data.scale);
-                circle( img, center, radius, color, 3, 8, 0 );
-            }
-            else
-                rectangle( img, Point(cvRound(r.x*dtf_data.scale), cvRound(r.y*dtf_data.scale)),
-                        Point(cvRound((r.x + r.width-1)*dtf_data.scale), cvRound((r.y + r.height-1)*dtf_data.scale)),
-                        color, 3, 8, 0);
-        }
+        // if (!rec_area_dq.empty()) {
+        //     Rect r = rec_area_dq.front();
+        //     col_img = img.clone();
+        //     col_area = r;
+        //     Mat smallImgROI;
+        //     vector<Rect> nestedObjects;
+        //     Point center;
+        //     Scalar color = colors[0];
+        //     int radius;
+        //     double aspect_ratio = (double)r.width/r.height;
+        //     if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
+        //     {
+        //         center.x = cvRound((r.x + r.width*0.5)*dtf_data.scale);
+        //         center.y = cvRound((r.y + r.height*0.5)*dtf_data.scale);
+        //         radius = cvRound((r.width + r.height)*0.25*dtf_data.scale);
+        //         circle( img, center, radius, color, 3, 8, 0 );
+        //     }
+        //     else
+        //         rectangle( img, Point(cvRound(r.x*dtf_data.scale), cvRound(r.y*dtf_data.scale)),
+        //                 Point(cvRound((r.x + r.width-1)*dtf_data.scale), cvRound((r.y + r.height-1)*dtf_data.scale)),
+        //                 color, 3, 8, 0);
+        // }
         rectangle(img, dtf_data.detectArea, Scalar(0, 0, 255));
         string result_message = format("Predicted class = %2d.", label);
         putText(img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
