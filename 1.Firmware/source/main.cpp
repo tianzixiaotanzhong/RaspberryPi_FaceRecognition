@@ -196,8 +196,7 @@ void *drawFace_entry (void *arg) {
         
         int label = dtf_data.predictedLabel;
         
-        img_dq.pop_back();
-        rec_area_dq.pop_back();
+        
         
         //标记脸部区域
         if (!rec_area_dq.empty()) {
@@ -226,6 +225,9 @@ void *drawFace_entry (void *arg) {
         string result_message = format("Predicted class = %2d.", label);
         putText(img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
         draw_Screen(img);
+
+        img_dq.pop_back();
+        rec_area_dq.pop_back();
         
         
         // usleep(1000);
