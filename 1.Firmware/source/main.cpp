@@ -226,8 +226,8 @@ void *drawFace_entry (void *arg) {
         putText(img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
         draw_Screen(img);
 
-        img_dq.pop_back();
-        rec_area_dq.pop_back();
+        img_dq.pop_front();
+        rec_area_dq.pop_front();
         
         
         // usleep(1000);
