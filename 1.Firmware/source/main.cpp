@@ -112,7 +112,7 @@ void *detectFace_entry (void *arg) {
         if (img_rq.isEmpty()) {
             continue;
         }
-        Mat img = img_rq.getFront();
+        Mat img = img_rq.getBack();
         Mat gray;
         cvtColor(img, gray, COLOR_BGR2GRAY );
         
@@ -193,7 +193,7 @@ void *drawFace_entry (void *arg) {
         if (img_rq.isEmpty()) {
             continue;
         }
-        Mat img = img_rq.getFront().clone();
+        Mat img = img_rq.getBack().clone();
         
         int label = dtf_data.predictedLabel;
         

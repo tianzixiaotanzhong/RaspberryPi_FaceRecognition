@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-05 18:09:06
- * @LastEditTime: 2021-08-06 08:29:37
+ * @LastEditTime: 2021-08-06 08:38:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \1.Firmware\include\ring_queue.h
@@ -71,6 +71,11 @@ void ring_queue<T>::pop() {
 template <class T>
 T ring_queue<T>::getFront() {
     return buffer[front];
+}
+
+template <class T>
+T ring_queue<T>::getBack() {
+    return buffer[(rear  + buffersize - 1) % bufferSize];
 }
 
 template <class T>
