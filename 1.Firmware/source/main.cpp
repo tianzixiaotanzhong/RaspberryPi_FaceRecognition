@@ -103,7 +103,7 @@ void *detectFace_entry (void *arg) {
     double t = 0;
     while (1)
     {
-        cout << "detectFace_entry" << endl;
+        // cout << "detectFace_entry" << endl;
 
         #ifdef DEBUG_MODE 
         t = (double)getTickCount();
@@ -187,7 +187,7 @@ Rect col_area;
 void *drawFace_entry (void *arg) {
     double t = 0;
     while (1) {
-        cout << "drawFace_entry" << endl;
+        // cout << "drawFace_entry" << endl;
         t = (double)getTickCount();
         
         if (img_rq.isEmpty()) {
