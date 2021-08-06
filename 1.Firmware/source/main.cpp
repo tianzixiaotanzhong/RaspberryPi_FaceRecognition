@@ -16,6 +16,7 @@
 #include "readjpg.h"
 #include "GenVedio.h"
 #include "my_csv.h"
+#include "ring_queue.h"
 #include <unistd.h>
 //#include <unistd.h>
 using namespace std;
@@ -30,8 +31,8 @@ int nB = 3;
 int ImgPitch = ROUND4(ImgW*3);
 int len = ImgPitch*ImgH;
 
-deque<Mat> img_dq;
-deque<Rect> rec_area_dq;
+ring_queue<Mat> img_rq;
+ring_queue<Rect> rec_area_rq;
 
 CDrawImg_Linux drawer;
 
@@ -108,10 +109,10 @@ void *detectFace_entry (void *arg) {
         t = (double)getTickCount();
         #endif
         vector<Rect> faces, face2;
-        if (img_dq.empty()) {
+        if (img_rq.isEmpty()) {
             continue;
         }
-        Mat img = img_dq.front();
+        Mat img = img_rq.getFront();
         Mat gray;
         cvtColor(img, gray, COLOR_BGR2GRAY );
         
@@ -143,7 +144,7 @@ void *detectFace_entry (void *arg) {
         }
 
         if (!faces.empty()) {
-            rec_area_dq.push_back(faces[0]);
+            rec_area_rq.push(faces[0]);
         }
 
         #ifdef DEBUG_MODE 
@@ -158,7 +159,7 @@ void *detectFace_entry (void *arg) {
 void *recognition_entry (void *arg) {
     // while (1) {
     //     cout << "recognition_entry" << endl;
-    //     if (rec_area_dq.empty()) {
+    //     if (rec_area_rq.empty()) {
     //         dtf_data.predictedLabel = 0;
     //         continue;
     //     }
@@ -173,7 +174,7 @@ void *recognition_entry (void *arg) {
     //     Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
     //     model->train(imgs, labels);
 
-    //     dtf_data.predictedLabel = model->predict(img_dq.back()(rec_area_dq.back()));
+    //     dtf_data.predictedLabel = model->predict(img_rq.back()(rec_area_rq.back()));
 
     //     // usleep(1000);
     //     //cout << result_message << endl;
@@ -189,18 +190,18 @@ void *drawFace_entry (void *arg) {
         cout << "drawFace_entry" << endl;
         t = (double)getTickCount();
         
-        if (img_dq.empty()) {
+        if (img_rq.isEmpty()) {
             continue;
         }
-        Mat img = img_dq.front().clone();
+        Mat img = img_rq.getFront().clone();
         
         int label = dtf_data.predictedLabel;
         
         
         
         //标记脸部区域
-        // if (!rec_area_dq.empty()) {
-        //     Rect r = rec_area_dq.front();
+        // if (!rec_area_rq.empty()) {
+        //     Rect r = rec_area_rq.front();
         //     col_img = img.clone();
         //     col_area = r;
         //     Mat smallImgROI;
@@ -226,8 +227,8 @@ void *drawFace_entry (void *arg) {
         putText(img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
         draw_Screen(img);
 
-        img_dq.pop_front();
-        rec_area_dq.pop_front();
+        img_rq.pop();
+        rec_area_rq.pop();
         
         
         // usleep(1000);
@@ -287,11 +288,11 @@ int main( int argc, const char** argv )
             capture >> frame;
             if( frame.empty() )
                 break;
-            if (img_dq.size() >= 10) {
+            if (img_rq.size() >= 10) {
                 continue;
-                //img_dq.pop_front();
+                //img_rq.pop_front();
             }
-            img_dq.push_back(frame.clone());
+            img_rq.push_back(frame.clone());
             
             #ifdef DEBUG_MODE 
             cout << "-----" << frame.size() << endl;
