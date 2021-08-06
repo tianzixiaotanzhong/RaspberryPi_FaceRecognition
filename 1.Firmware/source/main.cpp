@@ -200,8 +200,8 @@ void *drawFace_entry (void *arg) {
         
         
         //标记脸部区域
-        if (!rec_area_rq.empty()) {
-            Rect r = rec_area_rq.front();
+        if (!rec_area_rq.isEmpty()) {
+            Rect r = rec_area_rq.getBack();
             col_img = img.clone();
             col_area = r;
             Mat smallImgROI;
