@@ -31,8 +31,8 @@ int nB = 3;
 int ImgPitch = ROUND4(ImgW*3);
 int len = ImgPitch*ImgH;
 
-ring_queue<Mat> img_rq;
-ring_queue<Rect> rec_area_rq;
+ring_queue<Mat> img_rq(10);
+ring_queue<Rect> rec_area_rq(10);
 
 CDrawImg_Linux drawer;
 
