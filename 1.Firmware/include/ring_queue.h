@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-05 18:09:06
- * @LastEditTime: 2021-08-06 08:38:25
+ * @LastEditTime: 2021-08-06 08:40:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \1.Firmware\include\ring_queue.h
@@ -34,6 +34,7 @@ public:
     void push(T x);
     void pop();
     T getFront();
+    T getBack();
     int size();
     int bufferSize();
 };
