@@ -175,7 +175,7 @@ void *recognition_entry (void *arg) {
         Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
         model->train(imgs, labels);
 
-        cvtColor(img_rq.getBack(), gray, COLOR_BGR2GRAY)
+        cvtColor(img_rq.getBack(), gray, COLOR_BGR2GRAY);
         dtf_data.predictedLabel = model->predict(gray(rec_area_rq.getBack()));
 
         // usleep(1000);
