@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-05 18:09:06
- * @LastEditTime: 2021-08-06 08:12:22
+ * @LastEditTime: 2021-08-06 08:29:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \1.Firmware\include\ring_queue.h
@@ -25,9 +25,10 @@ private:
     int bufSize;
     int front;
     int rear;
+    
+public:
     bool isFull();
     bool isEmpty();
-public:
     ring_queue(int n);
     ~ring_queue();
     void push(T x);

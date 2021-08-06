@@ -292,7 +292,7 @@ int main( int argc, const char** argv )
                 continue;
                 //img_rq.pop_front();
             }
-            img_rq.push_back(frame.clone());
+            img_rq.push(frame.clone());
             
             #ifdef DEBUG_MODE 
             cout << "-----" << frame.size() << endl;
