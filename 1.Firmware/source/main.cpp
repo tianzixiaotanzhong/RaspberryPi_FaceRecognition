@@ -157,28 +157,28 @@ void *detectFace_entry (void *arg) {
 }
 
 void *recognition_entry (void *arg) {
-    // while (1) {
-    //     cout << "recognition_entry" << endl;
-    //     if (rec_area_rq.empty()) {
-    //         dtf_data.predictedLabel = 0;
-    //         continue;
-    //     }
+    while (1) {
+        // cout << "recognition_entry" << endl;
+        if (rec_area_rq.isEmpty()) {
+            dtf_data.predictedLabel = 0;
+            continue;
+        }
 
-    //     vector<Mat> imgs;
-    //     vector<int> labels;
-    //     read_csv("../script/test.csv", imgs, labels);
-    //     if (imgs.empty()) {
-    //         cout << "Imgs is empty!" << endl;
-    //         continue;
-    //     }
-    //     Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
-    //     model->train(imgs, labels);
+        vector<Mat> imgs;
+        vector<int> labels;
+        read_csv("../script/test.csv", imgs, labels);
+        if (imgs.empty()) {
+            cout << "Imgs is empty!" << endl;
+            continue;
+        }
+        Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
+        model->train(imgs, labels);
 
-    //     dtf_data.predictedLabel = model->predict(img_rq.back()(rec_area_rq.back()));
+        dtf_data.predictedLabel = model->predict(img_rq.getBack()(rec_area_rq.getBack()));
 
-    //     // usleep(1000);
-    //     //cout << result_message << endl;
-    // }
+        // usleep(1000);
+        //cout << result_message << endl;
+    }
 }
 
 Mat col_img;
@@ -240,20 +240,20 @@ void *drawFace_entry (void *arg) {
 }
 
 void *collectFace_entry (void *arg) {
-    // string imgname;
-    // Mat gray;
-    // while (1) {
-    //     cout << "Please enter your number:";
-    //     int label;
-    //     cin >> label;
-    //     if (!col_img.empty() && !col_area.empty()) {
-    //         cvtColor(col_img, gray, COLOR_BGR2GRAY);
-    //         imgname = format("../data/face%d/s%d.jpg", label, ++dtf_data.ump[label]);
-    //         mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-    //         imwrite(imgname, gray(col_area));
-    //         write_csv("../script/test.csv", imgname, label);
-    //     }
-    // }
+    string imgname;
+    Mat gray;
+    while (1) {
+        cout << "Please enter your number:";
+        int label;
+        cin >> label;
+        if (!col_img.empty() && !col_area.empty()) {
+            cvtColor(col_img, gray, COLOR_BGR2GRAY);
+            imgname = format("../data/face%d/s%d.jpg", label, ++dtf_data.ump[label]);
+            mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
+            imwrite(imgname, gray(col_area));
+            write_csv("../script/test.csv", imgname, label);
+        }
+    }
 }
 
 
