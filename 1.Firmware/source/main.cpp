@@ -25,8 +25,8 @@ using namespace cv::face;
 
 //#define DEBUG_MODE
 
-int ImgW = 640;
-int ImgH = 480;
+int ImgW = 1440;
+int ImgH = 900;
 int nB = 3;
 int ImgPitch = ROUND4(ImgW*3);
 int len = ImgPitch*ImgH;
@@ -270,6 +270,8 @@ int main( int argc, const char** argv )
         cout << "Capture from camera #" <<  camera << " didn't work" << endl;
         return 1;
     }
+    capture.set(3, 1440);
+    capture.set(4, 900);
     
     dtf_init();
     //pthread_mutex_init(&my_mutex, NULL);
