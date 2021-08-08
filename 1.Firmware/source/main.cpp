@@ -294,6 +294,7 @@ int main( int argc, const char** argv )
                 continue;
                 //img_rq.pop_front();
             }
+            flip(frame, 1, frame);
             img_rq.push(frame.clone());
             
             #ifdef DEBUG_MODE 
