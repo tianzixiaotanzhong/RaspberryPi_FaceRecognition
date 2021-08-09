@@ -264,7 +264,7 @@ int main( int argc, const char** argv )
     VideoCapture capture;
     Mat frame, image;
     
-    int camera = -1;
+    int camera = 0;
     if(!capture.open(camera))
     {
         cout << "Capture from camera #" <<  camera << " didn't work" << endl;
