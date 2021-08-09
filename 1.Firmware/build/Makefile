@@ -231,6 +231,33 @@ source/my_csv.cpp.s:
 	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/source/my_csv.cpp.s
 .PHONY : source/my_csv.cpp.s
 
+source/ring_queue.o: source/ring_queue.cpp.o
+
+.PHONY : source/ring_queue.o
+
+# target to build an object file
+source/ring_queue.cpp.o:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/source/ring_queue.cpp.o
+.PHONY : source/ring_queue.cpp.o
+
+source/ring_queue.i: source/ring_queue.cpp.i
+
+.PHONY : source/ring_queue.i
+
+# target to preprocess a source file
+source/ring_queue.cpp.i:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/source/ring_queue.cpp.i
+.PHONY : source/ring_queue.cpp.i
+
+source/ring_queue.s: source/ring_queue.cpp.s
+
+.PHONY : source/ring_queue.s
+
+# target to generate assembly for a file
+source/ring_queue.cpp.s:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/source/ring_queue.cpp.s
+.PHONY : source/ring_queue.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -252,6 +279,9 @@ help:
 	@echo "... source/my_csv.o"
 	@echo "... source/my_csv.i"
 	@echo "... source/my_csv.s"
+	@echo "... source/ring_queue.o"
+	@echo "... source/ring_queue.i"
+	@echo "... source/ring_queue.s"
 .PHONY : help
 
 

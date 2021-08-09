@@ -1155,7 +1155,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "[/home/pi/opencv-project/opencv/_build][v4.5.3()]"
+			"value" : "[/home/pi/opencv-project/opencv-4.5.3/_build][v4.5.3()]"
 		},
 		{
 			"name" : "OpenCV_DIR",
@@ -1167,7 +1167,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pi/opencv-project/opencv/_build"
+			"value" : "/home/pi/opencv-project/opencv-4.5.3/_build"
 		}
 	],
 	"kind" : "cache",
