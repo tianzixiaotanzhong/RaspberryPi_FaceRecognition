@@ -37,6 +37,8 @@ public:
 			m_Pitch = m_finfo.line_length;
 			m_Buffer_sz = m_W * m_H * m_Bit;
 			
+		 	cout<< m_W << " "<< m_H << " "<< m_Bit << " " << m_Pitch << " "<< m_Buffer_sz << endl;	
+
 			m_fbp = (unsigned char *)mmap(0, m_Buffer_sz, PROT_READ | PROT_WRITE, MAP_SHARED,m_fbfd, 0);
 			if( m_fbp ){
 				memset(m_fbp,255,m_Buffer_sz);

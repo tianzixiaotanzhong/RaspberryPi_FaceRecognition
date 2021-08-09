@@ -28,7 +28,7 @@ using namespace cv::face;
 int ImgW = 1024;
 int ImgH = 768;
 int nB = 3;
-int ImgPitch = ROUND4(ImgW*3);
+int ImgPitch = ROUND4(ImgW * 3);
 int len = ImgPitch*ImgH;
 
 ring_queue<Mat> img_rq(10);
@@ -41,8 +41,8 @@ void draw_Screen (Mat input) {
     drawer.ShowImage("", input.data, ImgW, ImgH, nB);
 }
 
-string cascadeName = "/home/pi/opencv-project/opencv/data/haarcascades/haarcascade_frontalface_alt.xml";
-string nestedCascadeName = "/home/pi/opencv-project/opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
+string cascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_frontalface_alt.xml";
+string nestedCascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
 
 const static Scalar colors[] =
 {
@@ -264,7 +264,7 @@ int main( int argc, const char** argv )
     VideoCapture capture;
     Mat frame, image;
     
-    int camera = 0;
+    int camera = -1;
     if(!capture.open(camera))
     {
         cout << "Capture from camera #" <<  camera << " didn't work" << endl;
