@@ -31,8 +31,8 @@ int nB = 3;
 int ImgPitch = ROUND4(ImgW * 3);
 int len = ImgPitch*ImgH;
 
-ring_queue<Mat> img_rq(10);
-ring_queue<Rect> rec_area_rq(10);
+ring_queue<Mat> img_rq(20);
+ring_queue<Rect> rec_area_rq(20);
 
 CDrawImg_Linux drawer;
 
@@ -292,7 +292,7 @@ int main( int argc, const char** argv )
             capture >> frame;
             if( frame.empty() )
                 break;
-            if (img_rq.size() >= 10) {
+            if (img_rq.size() >= img_rq.bufferSize()) {
                 continue;
                 //img_rq.pop_front();
             }
