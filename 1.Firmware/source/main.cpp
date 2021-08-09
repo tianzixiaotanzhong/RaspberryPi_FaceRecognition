@@ -74,7 +74,7 @@ pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t my_convar = PTHREAD_COND_INITIALIZER;
 
 int dtf_init (void) {
-    dtf_data.detectArea = Rect(200, 120, 240, 240);
+    dtf_data.detectArea = Rect(256, 198, 512, 192);
     dtf_data.tryflip = false;
     dtf_data.scale = 1;
 
