@@ -76,7 +76,8 @@ pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t my_convar = PTHREAD_COND_INITIALIZER;
 
 int dtf_init (void) {
-    dtf_data.detectArea = Rect(256, 198, 512, 384);
+    // dtf_data.detectArea = Rect(256, 198, 512, 384);
+    dtf_data.detectArea = Rect(280, 150, 720, 420);
     dtf_data.tryflip = false;
     dtf_data.scale = 1;
 
@@ -98,6 +99,7 @@ int dtf_init (void) {
     for (auto x: labels) {
         dtf_data.ump[x]++;
     }
+    return 0;
 }
 
 
@@ -229,8 +231,10 @@ void *drawFace_entry (void *arg) {
         rectangle(img, dtf_data.detectArea, Scalar(0, 0, 255));
         string result_message = format("Predicted class = %2d.", label);
         putText(img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
+        Mat imgcp = img.clone();
         //draw_Screen(img);
-        imshow("result", img);
+        imshow("camera", imgcp);
+        waitKey(10);
 
         img_rq.pop();
         rec_area_rq.pop();
@@ -299,19 +303,21 @@ int main( int argc, const char** argv )
                 continue;
                 //img_rq.pop_front();
             }
+            
             flip(frame, frame, 1);
             img_rq.push(frame.clone());
-            
+            // imshow("test", frame);
+            // waitKey(10);
             #ifdef DEBUG_MODE 
             cout << "-----" << frame.size() << endl;
             #endif
             
         }
         void *status;
-        pthread_join(dt_thd, &status);
-        pthread_join(df_thd, &status);
-        pthread_join(cf_thd, &status);
-        pthread_join(rg_thd, &status);
+        // pthread_join(dt_thd, &status);
+        // pthread_join(df_thd, &status);
+        // pthread_join(cf_thd, &status);
+        // pthread_join(rg_thd, &status);
     }
     
     return 0;
