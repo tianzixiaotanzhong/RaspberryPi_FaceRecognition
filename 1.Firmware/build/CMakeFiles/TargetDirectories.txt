@@ -1,0 +1,3 @@
+C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir
+C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/edit_cache.dir
+C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/rebuild_cache.dir
