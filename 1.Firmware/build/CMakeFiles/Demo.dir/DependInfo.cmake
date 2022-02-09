@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/source/main.cpp" "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/source/main.obj"
-  "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/source/my_csv.cpp" "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/source/my_csv.obj"
-  "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/source/ring_queue.cpp" "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/source/ring_queue.obj"
+  "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/source/main.cpp" "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/source/main.cpp.obj"
+  "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/source/my_csv.cpp" "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/source/my_csv.cpp.obj"
+  "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/source/ring_queue.cpp" "C:/Users/WangZX/Desktop/test/RaspberryPi_FaceRecognition/1.Firmware/build/CMakeFiles/Demo.dir/source/ring_queue.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

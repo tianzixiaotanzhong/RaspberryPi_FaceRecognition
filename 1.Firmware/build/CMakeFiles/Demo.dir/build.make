@@ -75,60 +75,60 @@ include CMakeFiles/Demo.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Demo.dir/flags.make
 
-CMakeFiles/Demo.dir/source/main.obj: CMakeFiles/Demo.dir/flags.make
-CMakeFiles/Demo.dir/source/main.obj: CMakeFiles/Demo.dir/includes_CXX.rsp
-CMakeFiles/Demo.dir/source/main.obj: ../source/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Demo.dir/source/main.obj"
-	F:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Demo.dir\source\main.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\main.cpp
+CMakeFiles/Demo.dir/source/main.cpp.obj: CMakeFiles/Demo.dir/flags.make
+CMakeFiles/Demo.dir/source/main.cpp.obj: CMakeFiles/Demo.dir/includes_CXX.rsp
+CMakeFiles/Demo.dir/source/main.cpp.obj: ../source/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Demo.dir/source/main.cpp.obj"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Demo.dir\source\main.cpp.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\main.cpp
 
-CMakeFiles/Demo.dir/source/main.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Demo.dir/source/main.i"
-	F:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\main.cpp > CMakeFiles\Demo.dir\source\main.i
+CMakeFiles/Demo.dir/source/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Demo.dir/source/main.cpp.i"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\main.cpp > CMakeFiles\Demo.dir\source\main.cpp.i
 
-CMakeFiles/Demo.dir/source/main.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Demo.dir/source/main.s"
-	F:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\main.cpp -o CMakeFiles\Demo.dir\source\main.s
+CMakeFiles/Demo.dir/source/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Demo.dir/source/main.cpp.s"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\main.cpp -o CMakeFiles\Demo.dir\source\main.cpp.s
 
-CMakeFiles/Demo.dir/source/my_csv.obj: CMakeFiles/Demo.dir/flags.make
-CMakeFiles/Demo.dir/source/my_csv.obj: CMakeFiles/Demo.dir/includes_CXX.rsp
-CMakeFiles/Demo.dir/source/my_csv.obj: ../source/my_csv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Demo.dir/source/my_csv.obj"
-	F:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Demo.dir\source\my_csv.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_csv.cpp
+CMakeFiles/Demo.dir/source/my_csv.cpp.obj: CMakeFiles/Demo.dir/flags.make
+CMakeFiles/Demo.dir/source/my_csv.cpp.obj: CMakeFiles/Demo.dir/includes_CXX.rsp
+CMakeFiles/Demo.dir/source/my_csv.cpp.obj: ../source/my_csv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Demo.dir/source/my_csv.cpp.obj"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Demo.dir\source\my_csv.cpp.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_csv.cpp
 
-CMakeFiles/Demo.dir/source/my_csv.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Demo.dir/source/my_csv.i"
-	F:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_csv.cpp > CMakeFiles\Demo.dir\source\my_csv.i
+CMakeFiles/Demo.dir/source/my_csv.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Demo.dir/source/my_csv.cpp.i"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_csv.cpp > CMakeFiles\Demo.dir\source\my_csv.cpp.i
 
-CMakeFiles/Demo.dir/source/my_csv.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Demo.dir/source/my_csv.s"
-	F:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_csv.cpp -o CMakeFiles\Demo.dir\source\my_csv.s
+CMakeFiles/Demo.dir/source/my_csv.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Demo.dir/source/my_csv.cpp.s"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_csv.cpp -o CMakeFiles\Demo.dir\source\my_csv.cpp.s
 
-CMakeFiles/Demo.dir/source/ring_queue.obj: CMakeFiles/Demo.dir/flags.make
-CMakeFiles/Demo.dir/source/ring_queue.obj: CMakeFiles/Demo.dir/includes_CXX.rsp
-CMakeFiles/Demo.dir/source/ring_queue.obj: ../source/ring_queue.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Demo.dir/source/ring_queue.obj"
-	F:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Demo.dir\source\ring_queue.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\ring_queue.cpp
+CMakeFiles/Demo.dir/source/ring_queue.cpp.obj: CMakeFiles/Demo.dir/flags.make
+CMakeFiles/Demo.dir/source/ring_queue.cpp.obj: CMakeFiles/Demo.dir/includes_CXX.rsp
+CMakeFiles/Demo.dir/source/ring_queue.cpp.obj: ../source/ring_queue.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Demo.dir/source/ring_queue.cpp.obj"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Demo.dir\source\ring_queue.cpp.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\ring_queue.cpp
 
-CMakeFiles/Demo.dir/source/ring_queue.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Demo.dir/source/ring_queue.i"
-	F:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\ring_queue.cpp > CMakeFiles\Demo.dir\source\ring_queue.i
+CMakeFiles/Demo.dir/source/ring_queue.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Demo.dir/source/ring_queue.cpp.i"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\ring_queue.cpp > CMakeFiles\Demo.dir\source\ring_queue.cpp.i
 
-CMakeFiles/Demo.dir/source/ring_queue.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Demo.dir/source/ring_queue.s"
-	F:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\ring_queue.cpp -o CMakeFiles\Demo.dir\source\ring_queue.s
+CMakeFiles/Demo.dir/source/ring_queue.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Demo.dir/source/ring_queue.cpp.s"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\ring_queue.cpp -o CMakeFiles\Demo.dir\source\ring_queue.cpp.s
 
 # Object files for target Demo
 Demo_OBJECTS = \
-"CMakeFiles/Demo.dir/source/main.obj" \
-"CMakeFiles/Demo.dir/source/my_csv.obj" \
-"CMakeFiles/Demo.dir/source/ring_queue.obj"
+"CMakeFiles/Demo.dir/source/main.cpp.obj" \
+"CMakeFiles/Demo.dir/source/my_csv.cpp.obj" \
+"CMakeFiles/Demo.dir/source/ring_queue.cpp.obj"
 
 # External object files for target Demo
 Demo_EXTERNAL_OBJECTS =
 
-Demo.exe: CMakeFiles/Demo.dir/source/main.obj
-Demo.exe: CMakeFiles/Demo.dir/source/my_csv.obj
-Demo.exe: CMakeFiles/Demo.dir/source/ring_queue.obj
+Demo.exe: CMakeFiles/Demo.dir/source/main.cpp.obj
+Demo.exe: CMakeFiles/Demo.dir/source/my_csv.cpp.obj
+Demo.exe: CMakeFiles/Demo.dir/source/ring_queue.cpp.obj
 Demo.exe: CMakeFiles/Demo.dir/build.make
 Demo.exe: F:/mingw64/install/x64/mingw/lib/libopencv_gapi453.dll.a
 Demo.exe: F:/mingw64/install/x64/mingw/lib/libopencv_stitching453.dll.a

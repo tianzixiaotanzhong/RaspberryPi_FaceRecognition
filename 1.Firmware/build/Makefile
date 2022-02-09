@@ -141,50 +141,86 @@ Demo/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/build
 .PHONY : Demo/fast
 
-# target to build an object file
-source/main.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/main.obj
+source/main.obj: source/main.cpp.obj
+
 .PHONY : source/main.obj
 
-# target to preprocess a source file
-source/main.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/main.i
+# target to build an object file
+source/main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/main.cpp.obj
+.PHONY : source/main.cpp.obj
+
+source/main.i: source/main.cpp.i
+
 .PHONY : source/main.i
 
-# target to generate assembly for a file
-source/main.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/main.s
+# target to preprocess a source file
+source/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/main.cpp.i
+.PHONY : source/main.cpp.i
+
+source/main.s: source/main.cpp.s
+
 .PHONY : source/main.s
 
-# target to build an object file
-source/my_csv.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/my_csv.obj
+# target to generate assembly for a file
+source/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/main.cpp.s
+.PHONY : source/main.cpp.s
+
+source/my_csv.obj: source/my_csv.cpp.obj
+
 .PHONY : source/my_csv.obj
 
-# target to preprocess a source file
-source/my_csv.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/my_csv.i
+# target to build an object file
+source/my_csv.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/my_csv.cpp.obj
+.PHONY : source/my_csv.cpp.obj
+
+source/my_csv.i: source/my_csv.cpp.i
+
 .PHONY : source/my_csv.i
 
-# target to generate assembly for a file
-source/my_csv.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/my_csv.s
+# target to preprocess a source file
+source/my_csv.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/my_csv.cpp.i
+.PHONY : source/my_csv.cpp.i
+
+source/my_csv.s: source/my_csv.cpp.s
+
 .PHONY : source/my_csv.s
 
-# target to build an object file
-source/ring_queue.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/ring_queue.obj
+# target to generate assembly for a file
+source/my_csv.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/my_csv.cpp.s
+.PHONY : source/my_csv.cpp.s
+
+source/ring_queue.obj: source/ring_queue.cpp.obj
+
 .PHONY : source/ring_queue.obj
 
-# target to preprocess a source file
-source/ring_queue.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/ring_queue.i
+# target to build an object file
+source/ring_queue.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/ring_queue.cpp.obj
+.PHONY : source/ring_queue.cpp.obj
+
+source/ring_queue.i: source/ring_queue.cpp.i
+
 .PHONY : source/ring_queue.i
 
-# target to generate assembly for a file
-source/ring_queue.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/ring_queue.s
+# target to preprocess a source file
+source/ring_queue.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/ring_queue.cpp.i
+.PHONY : source/ring_queue.cpp.i
+
+source/ring_queue.s: source/ring_queue.cpp.s
+
 .PHONY : source/ring_queue.s
+
+# target to generate assembly for a file
+source/ring_queue.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/ring_queue.cpp.s
+.PHONY : source/ring_queue.cpp.s
 
 # Help Target
 help:
