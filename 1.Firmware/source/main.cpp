@@ -12,9 +12,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <thread>
-#include "DrawImage.h"
-#include "readjpg.h"
-#include "GenVedio.h"
+// #include "DrawImage.h"
+// #include "readjpg.h"
+// #include "GenVedio.h"
 #include "my_csv.h"
 #include "ring_queue.h"
 #include <unistd.h>
@@ -25,24 +25,26 @@ using namespace cv::face;
 
 //#define DEBUG_MODE
 
-int ImgW = 1024;
-int ImgH = 768;
-int nB = 3;
-int ImgPitch = ROUND4(ImgW * 3);
-int len = ImgPitch*ImgH;
+// int ImgW = 1024;
+// int ImgH = 768;
+// int nB = 3;
+// int ImgPitch = ROUND4(ImgW * 3);
+// int len = ImgPitch*ImgH;
 
 ring_queue<Mat> img_rq(20);
 ring_queue<Rect> rec_area_rq(20);
 
-CDrawImg_Linux drawer;
+// CDrawImg_Linux drawer;
 
-void draw_Screen (Mat input) {
-    cv::cvtColor(input, input, cv::COLOR_RGB2BGR);
-    drawer.ShowImage("", input.data, ImgW, ImgH, nB);
-}
+// void draw_Screen (Mat input) {
+//     cv::cvtColor(input, input, cv::COLOR_RGB2BGR);
+//     drawer.ShowImage("", input.data, ImgW, ImgH, nB);
+// }
 
-string cascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_frontalface_alt.xml";
-string nestedCascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
+// string cascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_frontalface_alt.xml";
+// string nestedCascadeName = "/home/pi/opencv-project/opencv-4.5.3/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
+string cascadeName = "F:/opencv4.5.3/data/haarcascades/haarcascade_frontalface_alt.xml";
+string nestedCascadeName = "F:/opencv4.5.3/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
 
 const static Scalar colors[] =
 {
@@ -227,7 +229,8 @@ void *drawFace_entry (void *arg) {
         rectangle(img, dtf_data.detectArea, Scalar(0, 0, 255));
         string result_message = format("Predicted class = %2d.", label);
         putText(img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
-        draw_Screen(img);
+        //draw_Screen(img);
+        imshow("result", img);
 
         img_rq.pop();
         rec_area_rq.pop();
@@ -251,7 +254,7 @@ void *collectFace_entry (void *arg) {
         if (!col_img.empty() && !col_area.empty()) {
             cvtColor(col_img, gray, COLOR_BGR2GRAY);
             imgname = format("../data/face%d/s%d.jpg", label, ++dtf_data.ump[label]);
-            mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
+            mkdir(format("../data/face%d", label).c_str());//, S_IRWXU);
             imwrite(imgname, gray(col_area));
             write_csv("../script/test.csv", imgname, label);
         }
@@ -264,7 +267,7 @@ int main( int argc, const char** argv )
     VideoCapture capture;
     Mat frame, image;
     
-    int camera = -1;
+    int camera = 0;
     if(!capture.open(camera))
     {
         cout << "Capture from camera #" <<  camera << " didn't work" << endl;
