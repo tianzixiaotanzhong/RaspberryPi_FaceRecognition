@@ -29,8 +29,11 @@ void read_csv(const string& filename, vector<Mat>& images, vector<int>& labels, 
         getline(liness, classlabel);
         // cout <<"-----"<<path<<"*****"<<classlabel<<endl;
         if(!path.empty() && !classlabel.empty()) {
-            images.push_back(imread(path, 0));
-            labels.push_back(atoi(classlabel.c_str()));
+            Mat retmp = imread(path, 0);
+            if (!retmp.empty()) {
+                images.push_back(retmp);
+                labels.push_back(atoi(classlabel.c_str()));
+            }
         }
     }
 }
