@@ -141,6 +141,33 @@ Demo/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/build
 .PHONY : Demo/fast
 
+cjson/cJSON.obj: cjson/cJSON.c.obj
+
+.PHONY : cjson/cJSON.obj
+
+# target to build an object file
+cjson/cJSON.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/cjson/cJSON.c.obj
+.PHONY : cjson/cJSON.c.obj
+
+cjson/cJSON.i: cjson/cJSON.c.i
+
+.PHONY : cjson/cJSON.i
+
+# target to preprocess a source file
+cjson/cJSON.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/cjson/cJSON.c.i
+.PHONY : cjson/cJSON.c.i
+
+cjson/cJSON.s: cjson/cJSON.c.s
+
+.PHONY : cjson/cJSON.s
+
+# target to generate assembly for a file
+cjson/cJSON.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/cjson/cJSON.c.s
+.PHONY : cjson/cJSON.c.s
+
 source/main.obj: source/main.cpp.obj
 
 .PHONY : source/main.obj
@@ -231,6 +258,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Demo
+	@echo ... cjson/cJSON.obj
+	@echo ... cjson/cJSON.i
+	@echo ... cjson/cJSON.s
 	@echo ... source/main.obj
 	@echo ... source/main.i
 	@echo ... source/main.s

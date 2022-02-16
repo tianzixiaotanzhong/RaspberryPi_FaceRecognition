@@ -1,6 +1,7 @@
 # private
 build/
 data/
+*.csv
 
 # Prerequisites
 *.d

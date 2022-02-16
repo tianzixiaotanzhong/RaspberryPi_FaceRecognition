@@ -93,7 +93,7 @@ int dtf_init (void) {
     vector<int> labels;
     read_csv("../script/test.csv", imgs, labels);
     if (imgs.empty()) {
-        cout << "Imgs is empty!" << endl;
+        // cout << "Imgs is empty!" << endl;
         return 0;
     }
     for (auto x: labels) {
@@ -173,7 +173,7 @@ void *recognition_entry (void *arg) {
         Mat gray;
         read_csv("../script/test.csv", imgs, labels);
         if (imgs.empty()) {
-            cout << "Imgs is empty!" << endl;
+            // cout << "Imgs is empty!" << endl;
             continue;
         }
         Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create();
