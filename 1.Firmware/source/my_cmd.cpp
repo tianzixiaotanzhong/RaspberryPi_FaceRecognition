@@ -1,9 +1,13 @@
 #include <iostream>
 #include <string.h>
+#include <my_cmd.h>
+
 using namespace std;
 
 int my_add_cmd_parse(int argc, const char** argv) {
+    if (argc == 3) {
 
+    }
 }
 
 int my_delete_cmd_parse(int argc, const char** argv) {
