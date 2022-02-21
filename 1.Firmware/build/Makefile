@@ -195,6 +195,60 @@ source/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/main.cpp.s
 .PHONY : source/main.cpp.s
 
+source/manage.obj: source/manage.c.obj
+
+.PHONY : source/manage.obj
+
+# target to build an object file
+source/manage.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/manage.c.obj
+.PHONY : source/manage.c.obj
+
+source/manage.i: source/manage.c.i
+
+.PHONY : source/manage.i
+
+# target to preprocess a source file
+source/manage.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/manage.c.i
+.PHONY : source/manage.c.i
+
+source/manage.s: source/manage.c.s
+
+.PHONY : source/manage.s
+
+# target to generate assembly for a file
+source/manage.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/manage.c.s
+.PHONY : source/manage.c.s
+
+source/my_cmd.obj: source/my_cmd.cpp.obj
+
+.PHONY : source/my_cmd.obj
+
+# target to build an object file
+source/my_cmd.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/my_cmd.cpp.obj
+.PHONY : source/my_cmd.cpp.obj
+
+source/my_cmd.i: source/my_cmd.cpp.i
+
+.PHONY : source/my_cmd.i
+
+# target to preprocess a source file
+source/my_cmd.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/my_cmd.cpp.i
+.PHONY : source/my_cmd.cpp.i
+
+source/my_cmd.s: source/my_cmd.cpp.s
+
+.PHONY : source/my_cmd.s
+
+# target to generate assembly for a file
+source/my_cmd.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Demo.dir\build.make CMakeFiles/Demo.dir/source/my_cmd.cpp.s
+.PHONY : source/my_cmd.cpp.s
+
 source/my_csv.obj: source/my_csv.cpp.obj
 
 .PHONY : source/my_csv.obj
@@ -264,6 +318,12 @@ help:
 	@echo ... source/main.obj
 	@echo ... source/main.i
 	@echo ... source/main.s
+	@echo ... source/manage.obj
+	@echo ... source/manage.i
+	@echo ... source/manage.s
+	@echo ... source/my_cmd.obj
+	@echo ... source/my_cmd.i
+	@echo ... source/my_cmd.s
 	@echo ... source/my_csv.obj
 	@echo ... source/my_csv.i
 	@echo ... source/my_csv.s

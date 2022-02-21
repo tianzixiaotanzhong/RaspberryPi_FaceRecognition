@@ -89,10 +89,38 @@ CMakeFiles/Demo.dir/source/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Demo.dir/source/main.cpp.s"
 	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\main.cpp -o CMakeFiles\Demo.dir\source\main.cpp.s
 
+CMakeFiles/Demo.dir/source/manage.c.obj: CMakeFiles/Demo.dir/flags.make
+CMakeFiles/Demo.dir/source/manage.c.obj: CMakeFiles/Demo.dir/includes_C.rsp
+CMakeFiles/Demo.dir/source/manage.c.obj: ../source/manage.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Demo.dir/source/manage.c.obj"
+	F:\mingw64\bin\x86_64-w64-mingw32-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Demo.dir\source\manage.c.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\manage.c
+
+CMakeFiles/Demo.dir/source/manage.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Demo.dir/source/manage.c.i"
+	F:\mingw64\bin\x86_64-w64-mingw32-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\manage.c > CMakeFiles\Demo.dir\source\manage.c.i
+
+CMakeFiles/Demo.dir/source/manage.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Demo.dir/source/manage.c.s"
+	F:\mingw64\bin\x86_64-w64-mingw32-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\manage.c -o CMakeFiles\Demo.dir\source\manage.c.s
+
+CMakeFiles/Demo.dir/source/my_cmd.cpp.obj: CMakeFiles/Demo.dir/flags.make
+CMakeFiles/Demo.dir/source/my_cmd.cpp.obj: CMakeFiles/Demo.dir/includes_CXX.rsp
+CMakeFiles/Demo.dir/source/my_cmd.cpp.obj: ../source/my_cmd.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Demo.dir/source/my_cmd.cpp.obj"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Demo.dir\source\my_cmd.cpp.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_cmd.cpp
+
+CMakeFiles/Demo.dir/source/my_cmd.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Demo.dir/source/my_cmd.cpp.i"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_cmd.cpp > CMakeFiles\Demo.dir\source\my_cmd.cpp.i
+
+CMakeFiles/Demo.dir/source/my_cmd.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Demo.dir/source/my_cmd.cpp.s"
+	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_cmd.cpp -o CMakeFiles\Demo.dir\source\my_cmd.cpp.s
+
 CMakeFiles/Demo.dir/source/my_csv.cpp.obj: CMakeFiles/Demo.dir/flags.make
 CMakeFiles/Demo.dir/source/my_csv.cpp.obj: CMakeFiles/Demo.dir/includes_CXX.rsp
 CMakeFiles/Demo.dir/source/my_csv.cpp.obj: ../source/my_csv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Demo.dir/source/my_csv.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Demo.dir/source/my_csv.cpp.obj"
 	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Demo.dir\source\my_csv.cpp.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\my_csv.cpp
 
 CMakeFiles/Demo.dir/source/my_csv.cpp.i: cmake_force
@@ -106,7 +134,7 @@ CMakeFiles/Demo.dir/source/my_csv.cpp.s: cmake_force
 CMakeFiles/Demo.dir/source/ring_queue.cpp.obj: CMakeFiles/Demo.dir/flags.make
 CMakeFiles/Demo.dir/source/ring_queue.cpp.obj: CMakeFiles/Demo.dir/includes_CXX.rsp
 CMakeFiles/Demo.dir/source/ring_queue.cpp.obj: ../source/ring_queue.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Demo.dir/source/ring_queue.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Demo.dir/source/ring_queue.cpp.obj"
 	F:\mingw64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Demo.dir\source\ring_queue.cpp.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\source\ring_queue.cpp
 
 CMakeFiles/Demo.dir/source/ring_queue.cpp.i: cmake_force
@@ -120,7 +148,7 @@ CMakeFiles/Demo.dir/source/ring_queue.cpp.s: cmake_force
 CMakeFiles/Demo.dir/cjson/cJSON.c.obj: CMakeFiles/Demo.dir/flags.make
 CMakeFiles/Demo.dir/cjson/cJSON.c.obj: CMakeFiles/Demo.dir/includes_C.rsp
 CMakeFiles/Demo.dir/cjson/cJSON.c.obj: ../cjson/cJSON.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Demo.dir/cjson/cJSON.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/Demo.dir/cjson/cJSON.c.obj"
 	F:\mingw64\bin\x86_64-w64-mingw32-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Demo.dir\cjson\cJSON.c.obj -c C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\cjson\cJSON.c
 
 CMakeFiles/Demo.dir/cjson/cJSON.c.i: cmake_force
@@ -134,6 +162,8 @@ CMakeFiles/Demo.dir/cjson/cJSON.c.s: cmake_force
 # Object files for target Demo
 Demo_OBJECTS = \
 "CMakeFiles/Demo.dir/source/main.cpp.obj" \
+"CMakeFiles/Demo.dir/source/manage.c.obj" \
+"CMakeFiles/Demo.dir/source/my_cmd.cpp.obj" \
 "CMakeFiles/Demo.dir/source/my_csv.cpp.obj" \
 "CMakeFiles/Demo.dir/source/ring_queue.cpp.obj" \
 "CMakeFiles/Demo.dir/cjson/cJSON.c.obj"
@@ -142,6 +172,8 @@ Demo_OBJECTS = \
 Demo_EXTERNAL_OBJECTS =
 
 Demo.exe: CMakeFiles/Demo.dir/source/main.cpp.obj
+Demo.exe: CMakeFiles/Demo.dir/source/manage.c.obj
+Demo.exe: CMakeFiles/Demo.dir/source/my_cmd.cpp.obj
 Demo.exe: CMakeFiles/Demo.dir/source/my_csv.cpp.obj
 Demo.exe: CMakeFiles/Demo.dir/source/ring_queue.cpp.obj
 Demo.exe: CMakeFiles/Demo.dir/cjson/cJSON.c.obj
@@ -201,7 +233,7 @@ Demo.exe: F:/mingw64/install/x64/mingw/lib/libopencv_core453.dll.a
 Demo.exe: CMakeFiles/Demo.dir/linklibs.rsp
 Demo.exe: CMakeFiles/Demo.dir/objects1.rsp
 Demo.exe: CMakeFiles/Demo.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable Demo.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\WangZX\Desktop\test\RaspberryPi_FaceRecognition\1.Firmware\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable Demo.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Demo.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

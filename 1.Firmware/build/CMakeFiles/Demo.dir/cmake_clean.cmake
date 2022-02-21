@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Demo.dir/cjson/cJSON.c.obj"
   "CMakeFiles/Demo.dir/source/main.cpp.obj"
+  "CMakeFiles/Demo.dir/source/manage.c.obj"
+  "CMakeFiles/Demo.dir/source/my_cmd.cpp.obj"
   "CMakeFiles/Demo.dir/source/my_csv.cpp.obj"
   "CMakeFiles/Demo.dir/source/ring_queue.cpp.obj"
   "Demo.exe"

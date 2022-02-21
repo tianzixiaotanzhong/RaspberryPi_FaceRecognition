@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include "manage.h"
 #include <my_cmd.h>
 
 using namespace std;
