@@ -1,10 +1,11 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 
 project( Demo )
 
 find_package( OpenCV REQUIRED )
 
 include_directories( ${OpenCV_INCLUDE_DIRS} ./include 
+    ./cjson
 	#./linux-draw/includes/libavcodec
 	#./linux-draw/includes/libavfilter
 	#./linux-draw/includes/libavutil

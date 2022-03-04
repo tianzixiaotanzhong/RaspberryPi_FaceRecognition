@@ -15,8 +15,9 @@
 #include "DrawImage.h"
 #include "readjpg.h"
 #include "GenVedio.h"
-#include "my_csv.h"
+#include "my_fileIO.h"
 #include "ring_queue.h"
+#include "student.h"
 #include <unistd.h>
 //#include <unistd.h>
 using namespace std;
@@ -33,6 +34,7 @@ int len = ImgPitch*ImgH;
 
 ring_queue<Mat> img_rq(20);
 ring_queue<Rect> rec_area_rq(20);
+vector<student> hstdts;
 
 CDrawImg_Linux drawer;
 
@@ -87,14 +89,13 @@ int dtf_init (void) {
     }
 
     vector<Mat> imgs;
-    vector<int> labels;
-    read_csv("../script/test.csv", imgs, labels);
+    read_csv("../script/test.csv", imgs, hstdts);
     if (imgs.empty()) {
         cout << "Imgs is empty!" << endl;
         return 0;
     }
-    for (auto x: labels) {
-        dtf_data.ump[x]++;
+    for (auto x: hstdts) {
+        dtf_data.ump[x.num]++;
     }
 }
 
@@ -166,8 +167,12 @@ void *recognition_entry (void *arg) {
 
         vector<Mat> imgs;
         vector<int> labels;
+        vector<student> stdts;
         Mat gray;
-        read_csv("../script/test.csv", imgs, labels);
+        read_csv("../script/test.csv", imgs, stdts);
+        for (auto s: stdts) {
+            labels.push_back(s.num);
+        }
         if (imgs.empty()) {
             cout << "Imgs is empty!" << endl;
             continue;
@@ -225,7 +230,15 @@ void *drawFace_entry (void *arg) {
                         color, 3, 8, 0);
         }
         rectangle(img, dtf_data.detectArea, Scalar(0, 0, 255));
-        string result_message = format("Predicted class = %2d.", label);
+        char name[16] = {0};
+        vector<student> stdts;
+        read_csv("../script/test.csv", imgs, stdts);
+        for (auto sd: stdts) {
+            if (sd.num == label) {
+                strcpy(name, sd.name);
+            }
+        }
+        string result_message = format("%d %s", label, name);
         putText(img, result_message, Point(50, 100), FONT_HERSHEY_SIMPLEX, 1, colors[6], 2);
         draw_Screen(img);
 
@@ -245,15 +258,39 @@ void *collectFace_entry (void *arg) {
     string imgname;
     Mat gray;
     while (1) {
-        cout << "Please enter your number:";
-        int label;
-        cin >> label;
-        if (!col_img.empty() && !col_area.empty()) {
-            cvtColor(col_img, gray, COLOR_BGR2GRAY);
-            imgname = format("../data/face%d/s%d.jpg", label, ++dtf_data.ump[label]);
-            mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
-            imwrite(imgname, gray(col_area));
-            write_csv("../script/test.csv", imgname, label);
+        string cmd_rebuff;
+        cout << "Please input:" << endl;
+        cout << "add or delete or find or edit" << endl;
+        cin >> cmd_rebuff;
+        if (cmd_rebuff == "add") {
+            int num;
+            string name;
+            cout << "Please enter your number:" << endl;
+            cin >> num;
+            cout << "Please enter your name:" << endl;
+            cin >> name;
+            student stdt;
+            stdt.num = num;
+            strcpy(stdt.name, name.c_str());
+            if (!col_img.empty() && !col_area.empty()) {
+                cvtColor(col_img, gray, COLOR_BGR2GRAY);
+                imgname = format("../data/face%d/s%d.jpg", num, ++dtf_data.ump[num]);
+                mkdir(format("../data/face%d", label).c_str(), S_IRWXU);
+                imwrite(imgname, gray(col_area));
+                write_csv("../script/test.csv", imgname, stdt);
+            }
+        }
+        else if (cmd_rebuff == "delete") {
+
+        }
+        else if (cmd_rebuff == "find") {
+
+        }
+        else if (cmd_rebuff == "edit") {
+
+        }
+        else {
+            cout << "The input format is incorrect!" << endl;
         }
     }
 }

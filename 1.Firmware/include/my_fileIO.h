@@ -17,7 +17,7 @@
 using namespace std;
 using namespace cv;
 
-void read_csv(const string& filename, vector<Mat>& images, vector<int>& labels, char separator = ';');
-void write_csv(const string& filename, string imgname, int lable, char separator = ';');
+void read_csv(const string& filename, vector<Mat>& images, vector<student>& stdts, char separator = ';');
+void write_csv(const string& filename, string imgdir, student sd, char separator = ';');
 
 #endif
